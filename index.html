@@ -27,7 +27,7 @@
         }
         
         /* ======================================================= */
-        /* --- PANEL KHUSUS ATAS (NAVBAR) DENGAN SOSMED --- */
+        /* --- PANEL KHUSUS ATAS (NAVBAR) --- */
         /* ======================================================= */
         .navbar { 
             background: linear-gradient(135deg, #0f172a, #1e293b); 
@@ -67,6 +67,20 @@
         .btn-rahasia-lock:hover { transform: scale(1.1) rotate(90deg); background: var(--accent); }
 
         /* ======================================================= */
+        /* --- NOTIFIKASI TOAST IPHONE STYLE --- */
+        /* ======================================================= */
+        #toastNotification {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            color: #0f172a; padding: 12px 24px; border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05);
+            font-weight: 700; font-size: 0.9rem; z-index: 1000000;
+            transition: top 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex; align-items: center; gap: 8px; text-align: center;
+        }
+        #toastNotification.show { top: 25px; }
+
+        /* ======================================================= */
         /* --- LAYOUT UTAMA KHUSUS HP (SEMUA CENTER) --- */
         /* ======================================================= */
         .app-wrapper { display: flex; flex: 1; flex-direction: column; overflow-y: auto; align-items: center; padding: 20px 15px; width: 100%;}
@@ -89,7 +103,7 @@
         
         input::placeholder, textarea::placeholder { font-size: 0.82rem !important; font-style: italic !important; color: rgba(100, 116, 139, 0.6) !important; font-weight: normal !important; }
 
-        .btn-download { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 15px; width: 100%; font-size: 1.05rem; font-weight: bold; border-radius: 10px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);}
+        .btn-download { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 15px; width: 100%; font-size: 1.05rem; font-weight: bold; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);}
         .btn-download:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5); }
         .btn-koreksi { background: linear-gradient(135deg, #3b82f6, #2563eb); margin-top: 15px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);}
         .btn-koreksi:hover { box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); }
@@ -121,7 +135,7 @@
         #appUtama { display: none; flex-direction: column; height: 100vh; width: 100vw; overflow-x: hidden; }
 
         /* ======================================================= */
-        /* --- SEMUA POPUP / MODAL (KACA PUTIH TRANSPARAN BLUR) --- */
+        /* --- SEMUA POPUP / MODAL --- */
         /* ======================================================= */
         .admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 100000; justify-content: center; align-items: center; padding: 15px; overflow-y: auto; overflow-x: hidden; }
         
@@ -140,11 +154,9 @@
         .btn-toggle-off { background-color: #64748b; color: white; }
         
         .admin-section { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.8); margin-bottom: 15px; text-align: left;}
-        
         .admin-form-scroll { max-height: 50vh; overflow-y: auto; overflow-x: hidden; padding-right: 5px; margin-bottom: 10px; width: 100%;}
         .admin-form-scroll input[type="text"], .admin-form-scroll input[type="email"], .admin-form-scroll textarea { margin-bottom: 12px; font-size:0.9rem;}
         
-        /* DESAIN CHECKBOX LAMPIRAN & RADIO BANK PINTAR */
         .lampiran-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
         .checkbox-item { 
             display: flex; align-items: center; justify-content: flex-start; gap: 8px;
@@ -171,8 +183,12 @@
         .cv-link-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%;}
 
         /* ======================================================= */
-        /* --- KERTAS SURAT & POP-UP KOREKSI (BESAR & BISA ZOOM) --- */
+        /* --- KERTAS SURAT & SMART FOCUS MODE (BLUR PEKAT) --- */
         /* ======================================================= */
+        #popupKoreksi {
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        }
         #popupKoreksi .admin-box { max-width: 95%; height: 90vh; display: flex; flex-direction: column; padding: 15px; }
         #kertasContainer { flex: 1; background: #cbd5e1; border-radius: 8px; overflow: auto; position: relative; margin-bottom: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); width: 100%;}
         #kertasSpacer { width: calc(210mm * 0.48); height: calc(297mm * 0.48); transition: all 0.3s ease; }
@@ -189,26 +205,18 @@
         .mb-3 { margin-bottom: 15px; } p { margin-top: 0; margin-bottom: 12px; }
         table { border-collapse: collapse; margin-left: 20px; margin-bottom: 15px; width: 100%; }
         td { padding: 1px 5px 1px 0; vertical-align: top; } .col-1 { width: 105px; } .col-2 { width: 10px; }
-        .ttd { margin-top: 25px; } .nama-ttd { font-weight: bold; margin-top: 60px; }
+        
+        .ttd { position: relative; margin-top: 25px; } 
+        .nama-ttd { font-weight: bold; margin-top: 0; }
         .highlight { background-color: #ffffcc; transition: 0.3s; padding: 0 3px; border-radius: 3px; }
 
-        /* MULTI-COLUMN UNTUK DAFTAR LAMPIRAN (AGAR TIDAK KEPANJANGAN) */
+        /* MULTI-COLUMN UNTUK DAFTAR LAMPIRAN */
         #val-lampiran-list {
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
-            column-count: 2;
-            -webkit-column-gap: 20px;
-            -moz-column-gap: 20px;
-            column-gap: 20px;
-            padding-left: 25px;
-            margin-top: 8px;
-            margin-bottom: 15px;
+            -webkit-column-count: 2; -moz-column-count: 2; column-count: 2;
+            -webkit-column-gap: 20px; -moz-column-gap: 20px; column-gap: 20px;
+            padding-left: 25px; margin-top: 8px; margin-bottom: 15px;
         }
-        #val-lampiran-list li {
-            margin-bottom: 4px;
-            break-inside: avoid-column;
-            page-break-inside: avoid;
-        }
+        #val-lampiran-list li { margin-bottom: 4px; break-inside: avoid-column; page-break-inside: avoid; }
 
         /* ======================================================= */
         /* --- POPUP EDUKASI PENGUNDUHAN --- */
@@ -227,6 +235,14 @@
     </style>
 </head>
 <body>
+
+    <!-- ============================================== -->
+    <!-- NOTIFIKASI TOAST IPHONE STYLE (ELEGAN + SUARA) -->
+    <!-- ============================================== -->
+    <div id="toastNotification">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span id="toastText">Selamat Datang!</span>
+    </div>
 
     <!-- ============================================== -->
     <!-- LOCK SCREEN KLIEN (BERANDA AWAL) -->
@@ -294,7 +310,6 @@
                     <label>Paragraf 2 (Pengalaman Kerja):</label>
                     <textarea id="adminPengalaman" placeholder="Contoh: Sebagai informasi, saya memiliki pengalaman..."></textarea>
                     
-                    <!-- SISTEM CENTANG LAMPIRAN PINTAR -->
                     <label>Daftar Lampiran (Otomatis Diurutkan):</label>
                     <div class="lampiran-grid" id="gridLampiranAdmin"></div>
                     
@@ -398,7 +413,6 @@
                 <div class="navbar-title">Surat Lamaran Generator Pro</div>
                 <div class="navbar-timer" id="countdownTimer">Sisa Waktu: Menghitung...</div>
                 
-                <!-- TAUTAN SOSIAL MEDIA (IG & WA) -->
                 <div class="social-links">
                     <a href="https://www.instagram.com/_firnanda?igsh=OXc2MWNodnpyNWRj" target="_blank" class="ig-link" title="Instagram">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -410,8 +424,6 @@
                         WhatsApp
                     </a>
                 </div>
-                <!-- SELESAI TAUTAN SOSMED -->
-
             </div>
             <div class="btn-admin-nav" onclick="bukaPopupLoginAdmin()" title="Admin Panel">⚙️</div>
         </div>
@@ -430,7 +442,6 @@
                     <input type="text" id="inputPosisi" placeholder="Contoh: Operator Produksi" onkeyup="updatePreview()">
                 </div>
                 
-                <!-- OPSI FORMAT SURAT (UMUM VS BANK) UNTUK KLIEN -->
                 <div class="form-group">
                     <label>Format Tujuan Surat</label>
                     <div class="lampiran-grid" style="grid-template-columns: 1fr 1fr;">
@@ -439,13 +450,11 @@
                     </div>
                 </div>
 
-                <!-- JIKA UMUM DIPILIH -->
                 <div class="form-group" id="formGroupPTClient">
                     <label>Nama Perusahaan Tujuan</label>
                     <input type="text" id="inputPT" placeholder="Contoh: PT Indofood CBP" onkeyup="updatePreview()">
                 </div>
 
-                <!-- JIKA BANK DIPILIH (PILIHAN 8 BANK) -->
                 <div class="form-group client-box-ui" id="formGroupBankClient" style="display:none;">
                     <label style="margin-bottom:10px;">Pilih Bank Tujuan:</label>
                     <div class="lampiran-grid" style="grid-template-columns: 1fr 1fr; margin-bottom:15px;">
@@ -461,13 +470,19 @@
                     <label>Kantor Cabang:</label>
                     <input type="text" id="clientCabangBank" placeholder="Contoh: Cabang Sidoarjo" onkeyup="updatePreview()" style="font-size:0.9rem; padding:10px;">
                 </div>
-                <!-- SELESAI OPSI BANK -->
                 
-                <!-- OPSI LAMPIRAN UNTUK KLIEN (DIJADIKAN 2 KOLOM RAPI) -->
                 <div class="form-group client-box-ui" style="margin-top: 10px;">
                     <label style="margin-bottom:10px;">Daftar Lampiran (Bisa Disesuaikan):</label>
-                    <!-- Grid akan diisi otomatis dari JS dan sekarang memakai 2 kolom sejajar -->
                     <div class="lampiran-grid" id="gridLampiranClient"></div>
+                </div>
+
+                <div class="form-group client-box-ui" style="margin-top: 10px; margin-bottom: 25px;">
+                    <label style="margin-bottom:5px;">✍️ Tanda Tangan Digital (Opsional):</label>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-top: 0; margin-bottom: 10px;">Goreskan jari Anda di dalam kotak bawah ini.</p>
+                    
+                    <canvas id="signature-pad" width="300" height="150" style="width: 100%; border: 2px dashed #cbd5e1; border-radius: 10px; background: #fff; cursor: crosshair; touch-action: none;"></canvas>
+                    
+                    <button type="button" onclick="clearSignature()" style="background: #f8fafc; color: #ef4444; border: 1px solid #fca5a5; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.3s;">🗑️ Hapus / Ulangi Tanda Tangan</button>
                 </div>
                 
                 <button class="btn-download btn-koreksi" onclick="bukaKoreksi()">🔍 Koreksi Surat Lamaran</button>
@@ -485,7 +500,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- 4. MODAL KOREKSI SURAT (UKURAN BESAR & BISA ZOOM) -->
+    <!-- 4. MODAL KOREKSI SURAT (SMART FOCUS & LIVE RENDER) -->
     <!-- ============================================== -->
     <div class="admin-overlay" id="popupKoreksi" style="z-index: 99999;">
         <div class="admin-box" style="padding: 15px;">
@@ -498,7 +513,6 @@
                     <div class="right-align highlight" id="preview-kota">Pasuruan, ............................</div>
                     <div class="mb-3">
                         <p style="margin:0;">Hal: Lamaran Pekerjaan – <span id="preview-posisi1" class="highlight">[Posisi yang Dilamar]</span></p>
-                        <!-- Jumlah Lampiran Berubah Otomatis -->
                         <p style="margin:0;">Lampiran: <span id="preview-lampiran" class="highlight">- Berkas</span></p>
                     </div>
                     
@@ -529,7 +543,6 @@
 
                     <p style="margin-top: 12px; margin-bottom: 2px;">Sebagai bahan pertimbangan Bapak/Ibu, saya turut melampirkan:</p>
                     
-                    <!-- DAFTAR LAMPIRAN YANG DIBUAT JADI 2 KOLOM CSS -->
                     <ol id="val-lampiran-list">
                         <li>Curriculum Vitae (CV)</li>
                         <li>Dokumen Lainnya</li>
@@ -539,16 +552,19 @@
                         <p>Besar harapan saya untuk dapat mengikuti tahapan wawancara. Atas waktu dan perhatian Bapak/Ibu, saya ucapkan terima kasih.</p>
                     </div>
 
-                    <div class="ttd">
+                    <div class="ttd" style="position: relative;">
                         <p style="margin:0;"><b>Hormat saya,</b></p>
-                        <p class="nama-ttd" id="val-nama-ttd" style="font-weight: bold;">-</p>
+                        <div style="height: 65px; display: flex; align-items: flex-end; margin-bottom: 2px;">
+                            <img id="preview-signature" src="" style="max-height: 80px; display: none;">
+                        </div>
+                        <p class="nama-ttd" id="val-nama-ttd" style="font-weight: bold; margin-top: 0;">-</p>
                     </div>
                 </div>
             </div>
             
             <div style="display: flex; gap: 10px; margin-top: 10px;">
                 <button class="btn-download btn-danger" style="flex: 1; padding: 12px; margin-top:0; font-size:0.95rem; background:#ef4444;" onclick="document.getElementById('popupKoreksi').style.display='none'">Tutup</button>
-                <button class="btn-download" style="flex: 1.5; margin-top:0; padding: 12px; font-size:0.95rem;" onclick="tampilkanPopupUnduh()">⬇️ Unduh Surat</button>
+                <button class="btn-download" id="btnMainUnduhSurat" style="flex: 1.5; margin-top:0; padding: 12px; font-size:0.95rem;" onclick="tampilkanPopupUnduh()">⬇️ Unduh Surat</button>
             </div>
         </div>
     </div>
@@ -587,6 +603,40 @@
 
     <script>
         // ==========================================
+        // FITUR PREMIUM 1: TOAST NOTIFICATION ELEGANT + WEB AUDIO API
+        // ==========================================
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastText').innerText = message;
+            toast.classList.add('show');
+            
+            // Efek Suara Dentingan (Ting!) menggunakan sintesis matematika murni
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const audioCtx = new AudioContext();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(1200, audioCtx.currentTime); // Nada tinggi elegan
+                
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05); // Fade in cepat
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.5); // Fade out halus
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 1.5);
+            } catch(e) { console.log("Perangkat tidak mendukung suara Web Audio API"); }
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ==========================================
         // ANIMASI MATRIX HACKER
         // ==========================================
         const canvas = document.getElementById('matrixCanvas');
@@ -618,11 +668,29 @@
         let matrixInterval = setInterval(drawMatrix, 75);
 
         // ==========================================
-        // FITUR KOREKSI & ZOOM KERTAS
+        // FITUR PREMIUM 2: KOREKSI SURAT & LIVE RENDERING
         // ==========================================
         function bukaKoreksi() {
             document.getElementById('popupKoreksi').style.display = 'flex';
             document.getElementById('kertasContainer').scrollTop = 0;
+            
+            const paper = document.getElementById('hal-surat');
+            const elements = Array.from(paper.children);
+            
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(15px)';
+                el.style.transition = 'all 0.4s ease';
+            });
+
+            let delay = 0;
+            elements.forEach(el => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, delay);
+                delay += 120; 
+            });
         }
 
         let isZoomed = false;
@@ -661,6 +729,92 @@
         window.clientLampiranCount = 0; 
 
         // ==========================================
+        // LOGIKA TANDA TANGAN DIGITAL (SIGNATURE PAD)
+        // ==========================================
+        let sigCanvas, sigCtx, isDrawingSig = false;
+        let sigHasStroke = false;
+
+        function initSignaturePad() {
+            sigCanvas = document.getElementById('signature-pad');
+            sigCtx = sigCanvas.getContext('2d');
+            sigCtx.lineWidth = 2.5;
+            sigCtx.lineJoin = "round";
+            sigCtx.lineCap = "round";
+            sigCtx.strokeStyle = "#000000";
+
+            sigCanvas.addEventListener('touchstart', handleStartSig, {passive: false});
+            sigCanvas.addEventListener('touchmove', handleMoveSig, {passive: false});
+            sigCanvas.addEventListener('touchend', handleEndSig);
+
+            sigCanvas.addEventListener('mousedown', handleStartSig);
+            sigCanvas.addEventListener('mousemove', handleMoveSig);
+            sigCanvas.addEventListener('mouseup', handleEndSig);
+            sigCanvas.addEventListener('mouseout', handleEndSig);
+        }
+
+        function getPointerPosSig(e) {
+            let rect = sigCanvas.getBoundingClientRect();
+            let clientX = e.clientX;
+            let clientY = e.clientY;
+
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            }
+
+            let scaleX = sigCanvas.width / rect.width;
+            let scaleY = sigCanvas.height / rect.height;
+
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
+        }
+
+        function handleStartSig(e) {
+            e.preventDefault();
+            isDrawingSig = true;
+            sigHasStroke = true;
+            let pos = getPointerPosSig(e);
+            sigCtx.beginPath();
+            sigCtx.moveTo(pos.x, pos.y);
+        }
+
+        function handleMoveSig(e) {
+            if (!isDrawingSig) return;
+            e.preventDefault();
+            let pos = getPointerPosSig(e);
+            sigCtx.lineTo(pos.x, pos.y);
+            sigCtx.stroke();
+        }
+
+        function handleEndSig(e) {
+            if (!isDrawingSig) return;
+            e.preventDefault();
+            isDrawingSig = false;
+            sigCtx.closePath();
+            updateSignaturePreview();
+        }
+
+        function updateSignaturePreview() {
+            const imgEl = document.getElementById('preview-signature');
+            if(sigHasStroke) {
+                const dataUrl = sigCanvas.toDataURL('image/png');
+                imgEl.src = dataUrl;
+                imgEl.style.display = 'block';
+            } else {
+                imgEl.style.display = 'none';
+                imgEl.src = '';
+            }
+        }
+
+        function clearSignature() {
+            sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+            sigHasStroke = false;
+            updateSignaturePreview();
+        }
+
+        // ==========================================
         // TOGGLE BANK CABANG DI KLIEN
         // ==========================================
         function toggleCabangClient() {
@@ -676,7 +830,7 @@
         }
 
         // ==========================================
-        // SISTEM CENTANG LAMPIRAN PINTAR (ADMIN & CLIENT)
+        // SISTEM CENTANG LAMPIRAN PINTAR
         // ==========================================
         const LAMPIRAN_OPTIONS = [
             "Curriculum Vitae (CV)",
@@ -981,9 +1135,13 @@
                     
                     document.getElementById('lockScreen').style.display = 'none';
                     clearInterval(matrixInterval);
-                    
                     document.getElementById('appUtama').style.display = 'flex';
                     
+                    // PANGGIL FITUR TOAST NOTIFICATION PREMIUM (BESERTA SUARA)
+                    showToast("👋 Selamat datang, " + data.nama + "!");
+                    
+                    initSignaturePad();
+
                     let areaTombol = document.getElementById('areaDownloadCvUtama');
                     areaTombol.innerHTML = "";
                     if(data.cvUrls) {
@@ -993,7 +1151,6 @@
                         });
                     }
                     
-                    // INJECT BIODATA
                     document.getElementById('val-nama').innerText = data.nama;
                     document.getElementById('val-nama-ttd').innerText = data.nama;
                     document.getElementById('val-pendidikan').innerText = data.biodata.pendidikan || "-";
@@ -1014,7 +1171,6 @@
                         document.getElementById('val-penutup').innerHTML = `<p>${data.biodata.penutup.replace(/\n/g, '<br>')}</p>`;
                     }
 
-                    // --- GENERATE CHECKBOX LAMPIRAN UNTUK KLIEN DARI DATABASE ADMIN ---
                     let adminLampiranArr = [];
                     if(data.biodata.lampiranList && data.biodata.lampiranList.trim() !== "") {
                         adminLampiranArr = data.biodata.lampiranList.split('\n').map(x => x.trim()).filter(x => x !== "");
@@ -1032,9 +1188,7 @@
                     });
                     document.getElementById('gridLampiranClient').innerHTML = clientGridHtml;
                     
-                    // Jalankan kalkulasi centang
                     updateClientLampiran();
-                    
                     jalankanTimer();
                     initTeksDefault();
                     
@@ -1046,7 +1200,6 @@
             }).catch(err => { alert("Gagal koneksi ke server. Cek internet Anda."); btn.innerText = "Buka Akses Sistem"; });
         }
 
-        // FUNGSI BARU: Menghitung centang di HP Klien secara Real-time
         function updateClientLampiran() {
             let checkboxes = document.querySelectorAll('#gridLampiranClient input[type="checkbox"]');
             let selected = [];
@@ -1129,7 +1282,6 @@
             document.getElementById('preview-posisi1').innerText = p || "[Posisi yang Dilamar]";
             document.getElementById('preview-posisi2').innerText = p || "[Posisi yang Dilamar]";
             
-            // BAGIAN TUJUAN SURAT (UMUM VS BANK)
             let clientFormat = document.querySelector('input[name="clientFormatSurat"]:checked').value;
             let blokTujuan = document.getElementById('blok-tujuan-surat');
 
@@ -1149,7 +1301,6 @@
                 document.getElementById('preview-pt2').innerText = selectedBank + (textCabang ? " " + textCabang : "");
                 document.getElementById('preview-pt2').style.backgroundColor = "transparent";
             } else {
-                // FORMAT PERUSAHAAN UMUM
                 blokTujuan.innerHTML = `
                     <p style="margin:0;"><b>Yth. Bapak/Ibu HRD <span id="preview-pt" class="highlight">${pt || "[Nama Perusahaan]"}</span></b></p>
                     <p style="margin:0;"><b>Di Tempat</b></p>
@@ -1162,20 +1313,22 @@
                 document.getElementById('preview-pt2').style.backgroundColor = ptHighlight;
             }
 
-            // JUMLAH LAMPIRAN OTOMATIS DARI CENTANG
             document.getElementById('preview-lampiran').innerText = window.clientLampiranCount + " Berkas";
             document.getElementById('preview-lampiran').style.backgroundColor = "transparent";
         }
 
+        // ==========================================
+        // FITUR PREMIUM 4: EFEK DOPAMIN PADA TOMBOL DOWNLOAD
+        // ==========================================
         async function eksekusiDownload() {
             document.getElementById('tutorialModal').style.display = 'none'; 
             
             const s = document.getElementById('hal-surat');
-            const mainBtn = document.getElementById('btnProsesUnduh'); 
+            const mainBtn = document.getElementById('btnMainUnduhSurat'); 
             
             document.querySelectorAll('.highlight').forEach(el => el.style.backgroundColor = 'transparent');
             let originalText = mainBtn.innerText;
-            mainBtn.innerText = "Memproses Gambar...";
+            mainBtn.innerText = "⏳ Memproses Gambar...";
             
             const clone = s.cloneNode(true);
             clone.style.transform = 'none'; 
@@ -1195,15 +1348,25 @@
                     document.body.appendChild(link); 
                     link.click(); 
                     document.body.removeChild(link);
+                    
+                    // EFEK SUKSES (DOPAMIN)
+                    mainBtn.innerText = "✔️ Berhasil Diunduh!";
+                    mainBtn.style.background = "linear-gradient(135deg, #059669, #047857)";
+                    mainBtn.style.transform = "scale(1.05)";
+                    
                 } catch (e) { alert("Gagal mengunduh surat. Coba browser lain."); }
                 finally { 
                     document.body.removeChild(clone); 
-                    mainBtn.innerText = originalText; 
                     updatePreview(); 
+                    
+                    setTimeout(() => {
+                        mainBtn.innerText = originalText;
+                        mainBtn.style.background = "";
+                        mainBtn.style.transform = "";
+                    }, 3000);
                 }
             }, 100);
         }
     </script>
 </body>
 </html>
-
