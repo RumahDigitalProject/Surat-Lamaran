@@ -6,6 +6,7 @@
     <title>Surat Lamaran Generator | Portal Pro</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
+        /* MENCEGAH LAYAR BERGESER KE KANAN-KIRI & MENGATUR UKURAN AGAR PAS */
         *, *::before, *::after { box-sizing: border-box; }
         html, body { max-width: 100vw; overflow-x: hidden; }
 
@@ -26,7 +27,7 @@
         }
         
         /* ======================================================= */
-        /* --- PANEL KHUSUS ATAS (NAVBAR) --- */
+        /* --- PANEL KHUSUS ATAS (NAVBAR) DENGAN SOSMED --- */
         /* ======================================================= */
         .navbar { 
             background: linear-gradient(135deg, #0f172a, #1e293b); 
@@ -39,6 +40,13 @@
         .navbar-title { font-size: 1rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; text-shadow: 0 2px 5px rgba(0,0,0,0.5);}
         .navbar-timer { font-size: 0.75rem; font-weight: 600; color: #00f0ff; margin-top: 4px; background: rgba(0,0,0,0.3); padding: 3px 10px; border-radius: 20px;}
         
+        .social-links { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+        .social-links a { display: flex; align-items: center; gap: 5px; text-decoration: none; font-size: 0.75rem; font-weight: 600; transition: 0.3s; }
+        .ig-link { color: #f472b6; }
+        .ig-link:hover { color: #ec4899; }
+        .wa-link { color: #34d399; }
+        .wa-link:hover { color: #10b981; }
+
         .btn-admin-nav {
             position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
             font-size: 18px; cursor: pointer; transition: 0.3s;
@@ -136,7 +144,7 @@
         .admin-form-scroll { max-height: 50vh; overflow-y: auto; overflow-x: hidden; padding-right: 5px; margin-bottom: 10px; width: 100%;}
         .admin-form-scroll input[type="text"], .admin-form-scroll input[type="email"], .admin-form-scroll textarea { margin-bottom: 12px; font-size:0.9rem;}
         
-        /* DESAIN RADIO BANK & CHECKBOX LAMPIRAN */
+        /* DESAIN CHECKBOX LAMPIRAN & RADIO BANK PINTAR */
         .lampiran-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
         .checkbox-item { 
             display: flex; align-items: center; justify-content: flex-start; gap: 8px;
@@ -184,6 +192,24 @@
         .ttd { margin-top: 25px; } .nama-ttd { font-weight: bold; margin-top: 60px; }
         .highlight { background-color: #ffffcc; transition: 0.3s; padding: 0 3px; border-radius: 3px; }
 
+        /* MULTI-COLUMN UNTUK DAFTAR LAMPIRAN (AGAR TIDAK KEPANJANGAN) */
+        #val-lampiran-list {
+            -webkit-column-count: 2;
+            -moz-column-count: 2;
+            column-count: 2;
+            -webkit-column-gap: 20px;
+            -moz-column-gap: 20px;
+            column-gap: 20px;
+            padding-left: 25px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+        }
+        #val-lampiran-list li {
+            margin-bottom: 4px;
+            break-inside: avoid-column;
+            page-break-inside: avoid;
+        }
+
         /* ======================================================= */
         /* --- POPUP EDUKASI PENGUNDUHAN --- */
         /* ======================================================= */
@@ -196,6 +222,8 @@
         
         .btn-group-tutorial { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 15px;}
         .btn-group-tutorial .btn-download { margin-top: 0; }
+        
+        .client-box-ui { background: rgba(0,0,0,0.03); padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 18px; text-align: left; width: 100%;}
     </style>
 </head>
 <body>
@@ -251,19 +279,6 @@
                     <label>Nama Lengkap (Wajib):</label>
                     <input type="text" id="adminNamaKlien" placeholder="Contoh: Budi Santoso">
                     
-                    <!-- PILIHAN FORMAT BANK -->
-                    <label>Format Tujuan Surat:</label>
-                    <div class="lampiran-grid" style="grid-template-columns: 1fr 1fr;">
-                        <label class="checkbox-item"><input type="radio" name="adminFormatSurat" value="default" checked onchange="toggleCabang('admin')"> <span>Umum (Default)</span></label>
-                        <label class="checkbox-item"><input type="radio" name="adminFormatSurat" value="mandiri" onchange="toggleCabang('admin')"> <span>Bank Mandiri</span></label>
-                        <label class="checkbox-item"><input type="radio" name="adminFormatSurat" value="bca" onchange="toggleCabang('admin')"> <span>Bank BCA</span></label>
-                        <label class="checkbox-item"><input type="radio" name="adminFormatSurat" value="jatim" onchange="toggleCabang('admin')"> <span>Bank Jatim</span></label>
-                    </div>
-                    <div id="adminCabangWrapper" style="display:none; margin-bottom:12px;">
-                        <input type="text" id="adminCabangBank" placeholder="Nama Cabang (Cth: Cabang Sidoarjo)">
-                    </div>
-                    <!-- AKHIR PILIHAN BANK -->
-                    
                     <label>Pendidikan Terakhir:</label>
                     <input type="text" id="adminPendidikan" placeholder="Contoh: SMK Negeri 1 Grati - Teknik...">
                     <label>Status Nikah:</label>
@@ -279,6 +294,7 @@
                     <label>Paragraf 2 (Pengalaman Kerja):</label>
                     <textarea id="adminPengalaman" placeholder="Contoh: Sebagai informasi, saya memiliki pengalaman..."></textarea>
                     
+                    <!-- SISTEM CENTANG LAMPIRAN PINTAR -->
                     <label>Daftar Lampiran (Otomatis Diurutkan):</label>
                     <div class="lampiran-grid" id="gridLampiranAdmin"></div>
                     
@@ -331,19 +347,6 @@
                 
                 <label>Nama Lengkap:</label>
                 <input type="text" id="editNamaVal" style="text-align: left;">
-                
-                <!-- EDIT FORMAT BANK -->
-                <label>Format Tujuan Surat:</label>
-                <div class="lampiran-grid" style="grid-template-columns: 1fr 1fr;">
-                    <label class="checkbox-item"><input type="radio" name="editFormatSurat" value="default" checked onchange="toggleCabang('edit')"> <span>Umum (Default)</span></label>
-                    <label class="checkbox-item"><input type="radio" name="editFormatSurat" value="mandiri" onchange="toggleCabang('edit')"> <span>Bank Mandiri</span></label>
-                    <label class="checkbox-item"><input type="radio" name="editFormatSurat" value="bca" onchange="toggleCabang('edit')"> <span>Bank BCA</span></label>
-                    <label class="checkbox-item"><input type="radio" name="editFormatSurat" value="jatim" onchange="toggleCabang('edit')"> <span>Bank Jatim</span></label>
-                </div>
-                <div id="editCabangWrapper" style="display:none; margin-bottom:12px;">
-                    <input type="text" id="editCabangBank" placeholder="Nama Cabang (Cth: Cabang Sidoarjo)" style="text-align:left;">
-                </div>
-                
                 <label>Pendidikan:</label>
                 <input type="text" id="editPendidikanVal" style="text-align: left;">
                 <label>Status Nikah:</label>
@@ -387,15 +390,29 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- APLIKASI UTAMA (FORM ISIAN KHUSUS HP) -->
+    <!-- APLIKASI UTAMA (FORM ISIAN KHUSUS HP KLIEN) -->
     <!-- ============================================== -->
     <div id="appUtama">
         <div class="navbar">
             <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
                 <div class="navbar-title">Surat Lamaran Generator Pro</div>
                 <div class="navbar-timer" id="countdownTimer">Sisa Waktu: Menghitung...</div>
+                
+                <!-- TAUTAN SOSIAL MEDIA (IG & WA) -->
+                <div class="social-links">
+                    <a href="https://www.instagram.com/_firnanda?igsh=OXc2MWNodnpyNWRj" target="_blank" class="ig-link" title="Instagram">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        _FIRNANDA
+                    </a>
+                    <span style="color: rgba(255,255,255,0.3);">|</span>
+                    <a href="https://wa.me/6285706889273" target="_blank" class="wa-link" title="WhatsApp">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        WhatsApp
+                    </a>
+                </div>
+                <!-- SELESAI TAUTAN SOSMED -->
+
             </div>
-            <!-- GERIGI ADMIN DI NAVBAR -->
             <div class="btn-admin-nav" onclick="bukaPopupLoginAdmin()" title="Admin Panel">⚙️</div>
         </div>
         
@@ -407,20 +424,50 @@
                     <label>Tempat & Tanggal Surat</label>
                     <input type="text" id="inputKota" placeholder="Contoh: Pasuruan, 18 Juli 2026" onkeyup="updatePreview()">
                 </div>
+                
                 <div class="form-group">
                     <label>Posisi yang Dilamar</label>
                     <input type="text" id="inputPosisi" placeholder="Contoh: Operator Produksi" onkeyup="updatePreview()">
                 </div>
                 
-                <!-- KOLOM PERUSAHAAN AKAN HILANG JIKA FORMAT BANK DIPILIH OLEH ADMIN -->
-                <div class="form-group" id="formGroupPT">
+                <!-- OPSI FORMAT SURAT (UMUM VS BANK) UNTUK KLIEN -->
+                <div class="form-group">
+                    <label>Format Tujuan Surat</label>
+                    <div class="lampiran-grid" style="grid-template-columns: 1fr 1fr;">
+                        <label class="checkbox-item"><input type="radio" name="clientFormatSurat" value="umum" checked onchange="toggleCabangClient()"> <span>Umum</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientFormatSurat" value="bank" onchange="toggleCabangClient()"> <span>Perbankan</span></label>
+                    </div>
+                </div>
+
+                <!-- JIKA UMUM DIPILIH -->
+                <div class="form-group" id="formGroupPTClient">
                     <label>Nama Perusahaan Tujuan</label>
                     <input type="text" id="inputPT" placeholder="Contoh: PT Indofood CBP" onkeyup="updatePreview()">
                 </div>
+
+                <!-- JIKA BANK DIPILIH (PILIHAN 8 BANK) -->
+                <div class="form-group client-box-ui" id="formGroupBankClient" style="display:none;">
+                    <label style="margin-bottom:10px;">Pilih Bank Tujuan:</label>
+                    <div class="lampiran-grid" style="grid-template-columns: 1fr 1fr; margin-bottom:15px;">
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank Mandiri (Persero) Tbk." checked onchange="updatePreview()"> <span>Mandiri</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank Central Asia Tbk." onchange="updatePreview()"> <span>BCA</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank Negara Indonesia (Persero) Tbk." onchange="updatePreview()"> <span>BNI</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank Rakyat Indonesia (Persero) Tbk." onchange="updatePreview()"> <span>BRI</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank Syariah Indonesia Tbk." onchange="updatePreview()"> <span>BSI</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank Tabungan Negara (Persero) Tbk." onchange="updatePreview()"> <span>BTN</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank CIMB Niaga Tbk." onchange="updatePreview()"> <span>CIMB Niaga</span></label>
+                        <label class="checkbox-item"><input type="radio" name="clientBankName" value="PT Bank Pembangunan Daerah Jawa Timur Tbk." onchange="updatePreview()"> <span>Jatim</span></label>
+                    </div>
+                    <label>Kantor Cabang:</label>
+                    <input type="text" id="clientCabangBank" placeholder="Contoh: Cabang Sidoarjo" onkeyup="updatePreview()" style="font-size:0.9rem; padding:10px;">
+                </div>
+                <!-- SELESAI OPSI BANK -->
                 
-                <div class="form-group">
-                    <label>Jumlah Lampiran</label>
-                    <input type="number" id="inputLampiran" inputmode="numeric" placeholder="Contoh: 7" onkeyup="updatePreview()" onchange="updatePreview()">
+                <!-- OPSI LAMPIRAN UNTUK KLIEN (DIJADIKAN 2 KOLOM RAPI) -->
+                <div class="form-group client-box-ui" style="margin-top: 10px;">
+                    <label style="margin-bottom:10px;">Daftar Lampiran (Bisa Disesuaikan):</label>
+                    <!-- Grid akan diisi otomatis dari JS dan sekarang memakai 2 kolom sejajar -->
+                    <div class="lampiran-grid" id="gridLampiranClient"></div>
                 </div>
                 
                 <button class="btn-download btn-koreksi" onclick="bukaKoreksi()">🔍 Koreksi Surat Lamaran</button>
@@ -447,15 +494,14 @@
             
             <div id="kertasContainer">
                 <div id="kertasSpacer"></div>
-                <!-- KERTAS SURAT YANG DINAMIS -->
                 <div class="a4-paper" id="hal-surat" onclick="toggleZoomKertas()">
                     <div class="right-align highlight" id="preview-kota">Pasuruan, ............................</div>
                     <div class="mb-3">
                         <p style="margin:0;">Hal: Lamaran Pekerjaan – <span id="preview-posisi1" class="highlight">[Posisi yang Dilamar]</span></p>
-                        <p style="margin:0;">Lampiran: <span id="preview-lampiran" class="highlight">7 (Tujuh) Berkas</span></p>
+                        <!-- Jumlah Lampiran Berubah Otomatis -->
+                        <p style="margin:0;">Lampiran: <span id="preview-lampiran" class="highlight">- Berkas</span></p>
                     </div>
                     
-                    <!-- BLOK TUJUAN SURAT DINAMIS (BISA UMUM / BANK) -->
                     <div class="mb-3" id="blok-tujuan-surat">
                         <p style="margin:0;"><b>Yth. Bapak/Ibu HRD <span id="preview-pt" class="highlight">[Nama Perusahaan]</span></b></p>
                         <p style="margin:0;"><b>Di Tempat</b></p>
@@ -465,7 +511,6 @@
                     <p>Berdasarkan informasi lowongan pekerjaan yang saya terima, melalui surat ini saya bermaksud melamar posisi <b><span id="preview-posisi2" class="highlight">[Posisi yang Dilamar]</span> di <span id="preview-pt2" class="highlight">[Nama Perusahaan]</span></b>. Berikut adalah data diri singkat saya:</p>
                     
                     <table>
-                        <!-- FONT BOLD PADA NAMA SUDAH DIHAPUS -->
                         <tr><td class="col-1">Nama</td><td class="col-2">:</td><td id="val-nama">-</td></tr>
                         <tr><td class="col-1">Pendidikan</td><td class="col-2">:</td><td id="val-pendidikan">-</td></tr>
                         <tr><td class="col-1">Status Nikah</td><td class="col-2">:</td><td id="val-status">-</td></tr>
@@ -482,8 +527,9 @@
                         <p style="margin-bottom: 0;">Sebagai informasi, saya memiliki pengalaman lebih dari 3 tahun di industri manufaktur.</p>
                     </div>
 
-                    <p style="margin-top: 12px;">Sebagai bahan pertimbangan Bapak/Ibu, saya turut melampirkan:</p>
+                    <p style="margin-top: 12px; margin-bottom: 2px;">Sebagai bahan pertimbangan Bapak/Ibu, saya turut melampirkan:</p>
                     
+                    <!-- DAFTAR LAMPIRAN YANG DIBUAT JADI 2 KOLOM CSS -->
                     <ol id="val-lampiran-list">
                         <li>Curriculum Vitae (CV)</li>
                         <li>Dokumen Lainnya</li>
@@ -612,24 +658,25 @@
         const PASSWORD_MASTER = "2Udr7j$*1"; 
         let globalDatabaseClients = []; 
         window.clientAlamatStr = ""; 
-        window.clientFormatSurat = "default";
-        window.clientCabangBank = "";
+        window.clientLampiranCount = 0; 
 
         // ==========================================
-        // TOGGLE BANK CABANG DI ADMIN
+        // TOGGLE BANK CABANG DI KLIEN
         // ==========================================
-        function toggleCabang(mode) {
-            let format = document.querySelector(`input[name="${mode}FormatSurat"]:checked`).value;
-            let wrapper = document.getElementById(`${mode}CabangWrapper`);
-            if(format !== 'default') {
-                wrapper.style.display = 'block';
+        function toggleCabangClient() {
+            let format = document.querySelector('input[name="clientFormatSurat"]:checked').value;
+            if (format === 'bank') {
+                document.getElementById('formGroupPTClient').style.display = 'none';
+                document.getElementById('formGroupBankClient').style.display = 'block';
             } else {
-                wrapper.style.display = 'none';
+                document.getElementById('formGroupPTClient').style.display = 'block';
+                document.getElementById('formGroupBankClient').style.display = 'none';
             }
+            updatePreview();
         }
 
         // ==========================================
-        // SISTEM CENTANG LAMPIRAN PINTAR
+        // SISTEM CENTANG LAMPIRAN PINTAR (ADMIN & CLIENT)
         // ==========================================
         const LAMPIRAN_OPTIONS = [
             "Curriculum Vitae (CV)",
@@ -706,7 +753,7 @@
         }
 
         // ==========================================
-        // 1. SISTEM ADMIN PANEL (CREATE & EDIT)
+        // 1. SISTEM ADMIN PANEL
         // ==========================================
         function bukaPopupLoginAdmin() { document.getElementById('overlayLoginAdmin').style.display = 'flex'; }
         function tutupSemuaAdmin() {
@@ -746,8 +793,6 @@
             if (!nama || fileInput.files.length === 0) return alert("Isi Nama Lengkap dan pilih minimal 1 foto CV!");
             
             let finalLampiranStr = getOrderedLampiran('admin');
-            let formatSurat = document.querySelector('input[name="adminFormatSurat"]:checked').value;
-            let cabangBank = document.getElementById('adminCabangBank').value;
 
             btn.disabled = true; loading.style.display = 'block'; document.getElementById('boxHasilKey').style.display = 'none';
             
@@ -756,8 +801,6 @@
                 let payload = { 
                     action: "create", 
                     namaKlien: nama, 
-                    formatSurat: formatSurat,
-                    cabangBank: cabangBank,
                     pendidikan: document.getElementById('adminPendidikan').value,
                     statusNikah: document.getElementById('adminStatus').value,
                     alamat: document.getElementById('adminAlamat').value,
@@ -777,9 +820,7 @@
                     document.getElementById('teksKunciBaru').innerText = data.key;
                     document.getElementById('boxHasilKey').style.display = 'block';
                     
-                    ['adminNamaKlien','adminCabangBank','adminPendidikan','adminStatus','adminAlamat','adminEmail','adminTelp','adminProfil','adminPengalaman','adminPenutup'].forEach(id => document.getElementById(id).value = '');
-                    document.querySelector('input[name="adminFormatSurat"][value="default"]').checked = true;
-                    toggleCabang('admin');
+                    ['adminNamaKlien','adminPendidikan','adminStatus','adminAlamat','adminEmail','adminTelp','adminProfil','adminPengalaman','adminPenutup'].forEach(id => document.getElementById(id).value = '');
                     fileInput.value = '';
                     
                     LAMPIRAN_OPTIONS.forEach((_, i) => {
@@ -839,12 +880,6 @@
             
             document.getElementById('editKeyVal').value = client.key; 
             document.getElementById('editNamaVal').value = client.nama; 
-            
-            let format = client.biodata.formatSurat || "default";
-            document.querySelector(`input[name="editFormatSurat"][value="${format}"]`).checked = true;
-            document.getElementById('editCabangBank').value = client.biodata.cabangBank || "";
-            toggleCabang('edit');
-            
             document.getElementById('editPendidikanVal').value = client.biodata.pendidikan || ""; 
             document.getElementById('editStatusVal').value = client.biodata.statusNikah || ""; 
             document.getElementById('editAlamatVal').value = client.biodata.alamat || ""; 
@@ -891,9 +926,6 @@
             let loading = document.getElementById('loadingEdit');
             
             let finalLampiranStr = getOrderedLampiran('edit');
-            let formatSurat = document.querySelector('input[name="editFormatSurat"]:checked').value;
-            let cabangBank = document.getElementById('editCabangBank').value;
-            
             let keepUrls = []; 
             document.querySelectorAll('.cb-keep-url:checked').forEach(cb => keepUrls.push(cb.value));
             
@@ -904,8 +936,6 @@
                     action: "edit", 
                     key: key, 
                     newName: document.getElementById('editNamaVal').value, 
-                    formatSurat: formatSurat,
-                    cabangBank: cabangBank,
                     pendidikan: document.getElementById('editPendidikanVal').value,
                     statusNikah: document.getElementById('editStatusVal').value,
                     alamat: document.getElementById('editAlamatVal').value,
@@ -951,6 +981,7 @@
                     
                     document.getElementById('lockScreen').style.display = 'none';
                     clearInterval(matrixInterval);
+                    
                     document.getElementById('appUtama').style.display = 'flex';
                     
                     let areaTombol = document.getElementById('areaDownloadCvUtama');
@@ -962,6 +993,7 @@
                         });
                     }
                     
+                    // INJECT BIODATA
                     document.getElementById('val-nama').innerText = data.nama;
                     document.getElementById('val-nama-ttd').innerText = data.nama;
                     document.getElementById('val-pendidikan').innerText = data.biodata.pendidikan || "-";
@@ -971,16 +1003,7 @@
                     document.getElementById('val-telp').innerText = data.biodata.noTelp || "-";
                     
                     window.clientAlamatStr = data.biodata.alamat || ""; 
-                    window.clientFormatSurat = data.biodata.formatSurat || "default";
-                    window.clientCabangBank = data.biodata.cabangBank || "";
                     
-                    // Sembunyikan Input Perusahaan jika Bank dipilih
-                    if (window.clientFormatSurat !== "default") {
-                        document.getElementById('formGroupPT').style.display = 'none';
-                    } else {
-                        document.getElementById('formGroupPT').style.display = 'block';
-                    }
-
                     if(data.biodata.profil && data.biodata.profil.trim() !== "") {
                         document.getElementById('val-profil').innerHTML = `<p>${data.biodata.profil.replace(/\n/g, '<br>')}</p>`;
                     }
@@ -991,17 +1014,26 @@
                         document.getElementById('val-penutup').innerHTML = `<p>${data.biodata.penutup.replace(/\n/g, '<br>')}</p>`;
                     }
 
+                    // --- GENERATE CHECKBOX LAMPIRAN UNTUK KLIEN DARI DATABASE ADMIN ---
+                    let adminLampiranArr = [];
                     if(data.biodata.lampiranList && data.biodata.lampiranList.trim() !== "") {
-                        let items = data.biodata.lampiranList.split('\n').filter(x => x.trim() !== "");
-                        let lampiranHtml = "";
-                        items.forEach(item => {
-                            lampiranHtml += `<li>${item.trim()}</li>`;
-                        });
-                        document.getElementById('val-lampiran-list').innerHTML = lampiranHtml;
-                        document.getElementById('inputLampiran').value = items.length;
-                    } else {
-                        document.getElementById('inputLampiran').value = "7";
+                        adminLampiranArr = data.biodata.lampiranList.split('\n').map(x => x.trim()).filter(x => x !== "");
                     }
+                    
+                    let allClientOptions = [...LAMPIRAN_OPTIONS];
+                    adminLampiranArr.forEach(item => {
+                        if(!allClientOptions.includes(item)) allClientOptions.push(item);
+                    });
+
+                    let clientGridHtml = "";
+                    allClientOptions.forEach((item, index) => {
+                        let isChecked = adminLampiranArr.includes(item) ? "checked" : "";
+                        clientGridHtml += `<label class="checkbox-item"><input type="checkbox" id="client_lamp_${index}" value="${item}" ${isChecked} onchange="updateClientLampiran()"> <span>${item}</span></label>`;
+                    });
+                    document.getElementById('gridLampiranClient').innerHTML = clientGridHtml;
+                    
+                    // Jalankan kalkulasi centang
+                    updateClientLampiran();
                     
                     jalankanTimer();
                     initTeksDefault();
@@ -1012,6 +1044,37 @@
                     alert("Kunci Salah atau Tidak Terdaftar di Server!");
                 }
             }).catch(err => { alert("Gagal koneksi ke server. Cek internet Anda."); btn.innerText = "Buka Akses Sistem"; });
+        }
+
+        // FUNGSI BARU: Menghitung centang di HP Klien secara Real-time
+        function updateClientLampiran() {
+            let checkboxes = document.querySelectorAll('#gridLampiranClient input[type="checkbox"]');
+            let selected = [];
+            let pasfotoSelected = false;
+            
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    if (cb.value === "Pasfoto Terbaru") {
+                        pasfotoSelected = true;
+                    } else {
+                        selected.push(cb.value);
+                    }
+                }
+            });
+            
+            if (pasfotoSelected) {
+                selected.push("Pasfoto Terbaru");
+            }
+            
+            window.clientLampiranCount = selected.length;
+            
+            let lampiranHtml = "";
+            selected.forEach(item => {
+                lampiranHtml += `<li>${item}</li>`;
+            });
+            document.getElementById('val-lampiran-list').innerHTML = lampiranHtml;
+            
+            updatePreview(); 
         }
 
         function jalankanTimer() {
@@ -1037,14 +1100,14 @@
 
         function initTeksDefault() {
             document.getElementById('inputKota').value = "";
-            updatePreview();
+            document.querySelector('input[name="clientFormatSurat"][value="umum"]').checked = true;
+            toggleCabangClient();
         }
 
         function updatePreview() {
             let k = document.getElementById('inputKota').value;
             let p = document.getElementById('inputPosisi').value;
             let pt = document.getElementById('inputPT').value;
-            let lamp = document.getElementById('inputLampiran').value;
             
             let defaultCity = "Pasuruan";
             if (window.clientAlamatStr) {
@@ -1067,26 +1130,26 @@
             document.getElementById('preview-posisi2').innerText = p || "[Posisi yang Dilamar]";
             
             // BAGIAN TUJUAN SURAT (UMUM VS BANK)
+            let clientFormat = document.querySelector('input[name="clientFormatSurat"]:checked').value;
             let blokTujuan = document.getElementById('blok-tujuan-surat');
-            if (window.clientFormatSurat && window.clientFormatSurat !== "default") {
-                let namaBankLengkap = "";
-                if (window.clientFormatSurat === "mandiri") namaBankLengkap = "PT Bank Mandiri (Persero) Tbk.";
-                else if (window.clientFormatSurat === "bca") namaBankLengkap = "PT Bank Central Asia Tbk.";
-                else if (window.clientFormatSurat === "jatim") namaBankLengkap = "PT Bank Pembangunan Daerah Jawa Timur Tbk.";
 
-                let textCabang = window.clientCabangBank ? "Cabang " + window.clientCabangBank : "";
+            if (clientFormat === "bank") {
+                let selectedBank = document.querySelector('input[name="clientBankName"]:checked').value;
+                let cabang = document.getElementById('clientCabangBank').value;
+                let textCabang = cabang ? cabang : ""; 
                 
                 blokTujuan.innerHTML = `
                     <p style="margin:0;"><b>Kepada Yth.,</b></p>
                     <p style="margin:0;"><b>HRD Manager / Pimpinan Cabang</b></p>
-                    <p style="margin:0;"><b>${namaBankLengkap}</b></p>
-                    <p style="margin:0;"><b>${textCabang}</b></p>
+                    <p style="margin:0;"><b>${selectedBank}</b></p>
+                    ${textCabang ? `<p style="margin:0;"><b>${textCabang}</b></p>` : ''}
                     <p style="margin:0;"><b>di Tempat</b></p>
                 `;
                 
-                document.getElementById('preview-pt2').innerText = namaBankLengkap + (textCabang ? " " + textCabang : "");
+                document.getElementById('preview-pt2').innerText = selectedBank + (textCabang ? " " + textCabang : "");
                 document.getElementById('preview-pt2').style.backgroundColor = "transparent";
             } else {
+                // FORMAT PERUSAHAAN UMUM
                 blokTujuan.innerHTML = `
                     <p style="margin:0;"><b>Yth. Bapak/Ibu HRD <span id="preview-pt" class="highlight">${pt || "[Nama Perusahaan]"}</span></b></p>
                     <p style="margin:0;"><b>Di Tempat</b></p>
@@ -1099,8 +1162,9 @@
                 document.getElementById('preview-pt2').style.backgroundColor = ptHighlight;
             }
 
-            if (lamp) document.getElementById('preview-lampiran').innerText = lamp + " Berkas";
-            else document.getElementById('preview-lampiran').innerText = "7 (Tujuh) Berkas";
+            // JUMLAH LAMPIRAN OTOMATIS DARI CENTANG
+            document.getElementById('preview-lampiran').innerText = window.clientLampiranCount + " Berkas";
+            document.getElementById('preview-lampiran').style.backgroundColor = "transparent";
         }
 
         async function eksekusiDownload() {
@@ -1142,3 +1206,4 @@
     </script>
 </body>
 </html>
+
