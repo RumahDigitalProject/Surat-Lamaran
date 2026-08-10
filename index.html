@@ -41,11 +41,8 @@
         .navbar-timer { font-size: 0.75rem; font-weight: 600; color: #00f0ff; margin-top: 4px; background: rgba(0,0,0,0.3); padding: 3px 10px; border-radius: 20px;}
         
         .social-links { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-        .social-links a { display: flex; align-items: center; gap: 5px; text-decoration: none; font-size: 0.75rem; font-weight: 600; transition: 0.3s; }
-        .ig-link { color: #f472b6; }
-        .ig-link:hover { color: #ec4899; }
-        .wa-link { color: #34d399; }
-        .wa-link:hover { color: #10b981; }
+        .social-links a { display: flex; align-items: center; gap: 5px; text-decoration: none; font-size: 0.75rem; font-weight: 600; transition: 0.3s; color: #ffffff !important; }
+        .social-links a:hover { opacity: 0.7; }
 
         .btn-admin-nav {
             position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
@@ -55,6 +52,15 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
         .btn-admin-nav:hover { transform: translateY(-50%) rotate(90deg); background: var(--secondary); }
+
+        .btn-info-nav {
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+            font-size: 16px; cursor: pointer; transition: 0.3s;
+            background: rgba(255,255,255,0.15); border-radius: 50%;
+            width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255,255,255,0.3); color: white; font-weight: 900; font-family: 'Times New Roman', serif;
+        }
+        .btn-info-nav:hover { transform: translateY(-50%) scale(1.1); background: var(--secondary); }
 
         .btn-rahasia-lock { 
             position: fixed; top: 15px; right: 15px; 
@@ -67,18 +73,28 @@
         .btn-rahasia-lock:hover { transform: scale(1.1) rotate(90deg); background: var(--accent); }
 
         /* ======================================================= */
-        /* --- NOTIFIKASI TOAST IPHONE STYLE --- */
+        /* --- NOTIFIKASI TOAST EKSKLUSIF (DURASI 7 DETIK) --- */
         /* ======================================================= */
         #toastNotification {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            color: #0f172a; padding: 12px 24px; border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05);
-            font-weight: 700; font-size: 0.9rem; z-index: 1000000;
-            transition: top 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            display: flex; align-items: center; gap: 8px; text-align: center;
+            position: fixed; top: -120px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 380px; 
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 15px 18px; border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid rgba(0,0,0,0.08);
+            z-index: 1000000;
+            transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; gap: 15px; text-align: left;
         }
-        #toastNotification.show { top: 25px; }
+        #toastNotification.show { top: 20px; }
+        .toast-icon { 
+            background: linear-gradient(135deg, #10b981, #059669); color: white; 
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; flex-shrink: 0; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        }
+        .toast-content { display: flex; flex-direction: column; }
+        .toast-text { color: #0f172a; font-weight: 800; font-size: 0.95rem; line-height: 1.3;}
+        .toast-subtext { font-size: 0.65rem; font-style: italic; color: #64748b; margin-top: 3px; }
 
         /* ======================================================= */
         /* --- LAYOUT UTAMA KHUSUS HP (SEMUA CENTER) --- */
@@ -135,7 +151,7 @@
         #appUtama { display: none; flex-direction: column; height: 100vh; width: 100vw; overflow-x: hidden; }
 
         /* ======================================================= */
-        /* --- SEMUA POPUP / MODAL --- */
+        /* --- SEMUA POPUP / MODAL UMUM --- */
         /* ======================================================= */
         .admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 100000; justify-content: center; align-items: center; padding: 15px; overflow-y: auto; overflow-x: hidden; }
         
@@ -222,8 +238,8 @@
         /* --- POPUP EDUKASI PENGUNDUHAN --- */
         /* ======================================================= */
         #tutorialModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 100000; flex-direction: column; justify-content: center; align-items: center; padding: 20px; overflow-x: hidden; }
-        .modal-content { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 30px 20px; border-radius: 16px; max-width: 450px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; margin: auto; border: 1px solid rgba(255, 255, 255, 0.6); color: #0f172a;}
-        .modal-content h3 { color: var(--primary); margin-top: 0; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; font-weight: 800; font-size: 1.3rem;}
+        #tutorialModal .modal-content { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 30px 20px; border-radius: 16px; max-width: 450px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; margin: auto; border: 1px solid rgba(255, 255, 255, 0.6); color: #0f172a;}
+        #tutorialModal .modal-content h3 { color: var(--primary); margin-top: 0; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; font-weight: 800; font-size: 1.3rem;}
         .warning-box { background: #fef3c7; color: #b45309; padding: 15px; border-radius: 10px; border-left: 5px solid #fbbf24; margin: 15px 0; font-weight: bold; font-size: 0.9rem; text-align: left; width: 100%;}
         .app-list { background: rgba(0, 0, 0, 0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: left; font-size: 0.85rem; width: 100%;}
         .app-list ul { margin: 5px 0 0 0; padding-left: 20px; color: #334155; }
@@ -232,16 +248,34 @@
         .btn-group-tutorial .btn-download { margin-top: 0; }
         
         .client-box-ui { background: rgba(0,0,0,0.03); padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 18px; text-align: left; width: 100%;}
+
+        /* ======================================================= */
+        /* --- POPUP INFO WEBSITE (TENTANG & UPDATE) --- */
+        /* ======================================================= */
+        #infoModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 100000; justify-content: center; align-items: center; padding: 20px; overflow-x: hidden; }
+        .info-content { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 30px 25px; border-radius: 16px; max-width: 400px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; margin: auto; border: 1px solid rgba(255, 255, 255, 0.6); color: #0f172a;}
+        .info-content h3 { color: var(--primary); margin-top: 0; font-weight: 900; font-size: 1.4rem; margin-bottom: 5px;}
+        .info-version { font-size: 0.85rem; color: #10b981; font-weight: bold; background: #d1fae5; display: inline-block; padding: 3px 12px; border-radius: 20px; margin-bottom: 15px;}
+        .info-desc { font-size: 0.95rem; color: #334155; line-height: 1.5; margin-bottom: 20px;}
+        .info-creator { background: rgba(15, 23, 42, 0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;}
+        .info-creator p { margin: 0; font-size: 0.9rem; color: #1e293b; font-weight: 600;}
+        .info-copyright { font-size: 0.75rem; color: #94a3b8; margin-bottom: 20px;}
+        
     </style>
 </head>
 <body>
 
     <!-- ============================================== -->
-    <!-- NOTIFIKASI TOAST IPHONE STYLE (ELEGAN + SUARA) -->
+    <!-- NOTIFIKASI TOAST IPHONE STYLE (7 DETIK + SUARA MELODI 6 DETIK) -->
     <!-- ============================================== -->
     <div id="toastNotification">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        <span id="toastText">Selamat Datang!</span>
+        <div class="toast-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="toast-content">
+            <span class="toast-text" id="toastTextMain">Selamat Datang!</span>
+            <span class="toast-subtext"><i>Directly sent by MFirnanda</i></span>
+        </div>
     </div>
 
     <!-- ============================================== -->
@@ -425,6 +459,9 @@
                     </a>
                 </div>
             </div>
+            
+            <!-- TOMBOL INFO DAN ADMIN DI KANAN KIRI -->
+            <div class="btn-info-nav" onclick="bukaInfoWeb()" title="Info Website">i</div>
             <div class="btn-admin-nav" onclick="bukaPopupLoginAdmin()" title="Admin Panel">⚙️</div>
         </div>
         
@@ -601,40 +638,99 @@
         </div>
     </div>
 
+    <!-- 6. POPUP INFORMASI WEBSITE (BARU) -->
+    <div id="infoModal" class="admin-overlay" style="z-index: 100000;">
+        <div class="info-content">
+            <h3>Portal Pro</h3>
+            <div class="info-version">Versi <span id="appVersionText">Memuat...</span></div>
+            
+            <p class="info-desc">Website cerdas khusus untuk men-generate Surat Lamaran Pekerjaan secara otomatis, eksklusif, dan profesional.</p>
+            
+            <div class="info-creator">
+                <p>🛠️ Dikembangkan & Dibuat Oleh:</p>
+                <h4 style="margin: 5px 0 0 0; color: var(--primary); font-size: 1.2rem;">MFirnanda</h4>
+            </div>
+            
+            <div class="info-copyright">
+                &copy; <span id="yearCopy">2026</span> Portal Pro. All rights reserved.
+            </div>
+
+            <button class="btn-download btn-danger" style="padding: 12px; margin-top: 0;" onclick="tutupInfoWeb()">Tutup</button>
+        </div>
+    </div>
+
     <script>
         // ==========================================
-        // FITUR PREMIUM 1: TOAST NOTIFICATION ELEGANT + WEB AUDIO API
+        // FITUR PREMIUM 1: TOAST NOTIFICATION 7 DETIK + MELODI 6 DETIK
         // ==========================================
-        function showToast(message) {
+        function showToast(namaClient) {
             const toast = document.getElementById('toastNotification');
-            document.getElementById('toastText').innerText = message;
+            document.getElementById('toastTextMain').innerText = "Selamat datang, " + namaClient;
             toast.classList.add('show');
             
-            // Efek Suara Dentingan (Ting!) menggunakan sintesis matematika murni
+            // Efek Suara Harmoni Sci-Fi (6 Detik Decay Mulus)
             try {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
-                const audioCtx = new AudioContext();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
+                const ctx = new AudioContext();
                 
-                oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(1200, audioCtx.currentTime); // Nada tinggi elegan
+                function playNote(freq, startTime, duration, type='sine') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = type; 
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + startTime);
+                    
+                    gain.gain.setValueAtTime(0, ctx.currentTime + startTime);
+                    gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + startTime + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.start(ctx.currentTime + startTime);
+                    osc.stop(ctx.currentTime + startTime + duration);
+                }
+
+                // Pola 5 Nada Futuristik & Mewah (Durasi Gema 6 Detik di akhir)
+                playNote(523.25, 0, 1.0, 'sine');    // Nada C5
+                playNote(659.25, 0.15, 1.0, 'sine'); // Nada E5
+                playNote(783.99, 0.3, 1.0, 'sine');  // Nada G5
+                playNote(1046.50, 0.45, 6.0, 'triangle'); // Nada C6 (Kristal panjang 6 detik)
+                playNote(1318.51, 0.45, 6.0, 'sine');     // Nada E6 (Harmoni panjang 6 detik)
                 
-                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05); // Fade in cepat
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.5); // Fade out halus
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 1.5);
             } catch(e) { console.log("Perangkat tidak mendukung suara Web Audio API"); }
 
+            // Menghilang setelah 7 detik
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3000);
+            }, 7000);
         }
+
+        // ==========================================
+        // FITUR INFO WEB (VERSIONING OTOMATIS BERDASAR TGL 1 TIAP BULAN)
+        // ==========================================
+        function setAppVersion() {
+            const d = new Date();
+            const yearStr = d.getFullYear().toString().substr(-2);
+            const monthStr = d.getMonth() + 1;
+            const version = "0.1." + monthStr + "." + yearStr;
+            
+            document.getElementById('appVersionText').innerText = version;
+            document.getElementById('yearCopy').innerText = d.getFullYear();
+        }
+
+        function bukaInfoWeb() {
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+        function tutupInfoWeb() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setAppVersion();
+            renderLampiranGrid('gridLampiranAdmin', 'admin');
+            renderLampiranGrid('gridLampiranEdit', 'edit');
+        });
 
         // ==========================================
         // ANIMASI MATRIX HACKER
@@ -853,13 +949,10 @@
             LAMPIRAN_OPTIONS.forEach((item, index) => {
                 html += `<label class="checkbox-item"><input type="checkbox" id="${prefix}_lamp_${index}" value="${item}"> <span>${item}</span></label>`;
             });
-            document.getElementById(containerId).innerHTML = html;
+            if(document.getElementById(containerId)) {
+                document.getElementById(containerId).innerHTML = html;
+            }
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderLampiranGrid('gridLampiranAdmin', 'admin');
-            renderLampiranGrid('gridLampiranEdit', 'edit');
-        });
 
         function addCustomLampiran(mode) {
             let inputId = mode === 'admin' ? 'inputCustomLampiranAdmin' : 'inputCustomLampiranEdit';
@@ -912,7 +1005,7 @@
         function bukaPopupLoginAdmin() { document.getElementById('overlayLoginAdmin').style.display = 'flex'; }
         function tutupSemuaAdmin() {
             document.querySelectorAll('.admin-overlay').forEach(el => {
-                if (el.id !== 'popupKoreksi' && el.id !== 'tutorialModal') el.style.display = 'none';
+                if (el.id !== 'popupKoreksi' && el.id !== 'tutorialModal' && el.id !== 'infoModal') el.style.display = 'none';
             });
             document.getElementById('inputPassAdmin').value = '';
         }
@@ -1110,7 +1203,7 @@
         }
 
         // ==========================================
-        // 2. SISTEM KLIEN LOGIN & OTOMASI SURAT
+        // 2. SISTEM KLIEN LOGIN, OTOMASI SURAT
         // ==========================================
         let BATAS_WAKTU_KIAMAT = 0;
         let timerInterval;
@@ -1137,8 +1230,8 @@
                     clearInterval(matrixInterval);
                     document.getElementById('appUtama').style.display = 'flex';
                     
-                    // PANGGIL FITUR TOAST NOTIFICATION PREMIUM (BESERTA SUARA)
-                    showToast("👋 Selamat datang, " + data.nama + "!");
+                    // PANGGIL FITUR TOAST NOTIFICATION EKSKLUSIF
+                    showToast(data.nama);
                     
                     initSignaturePad();
 
@@ -1317,9 +1410,6 @@
             document.getElementById('preview-lampiran').style.backgroundColor = "transparent";
         }
 
-        // ==========================================
-        // FITUR PREMIUM 4: EFEK DOPAMIN PADA TOMBOL DOWNLOAD
-        // ==========================================
         async function eksekusiDownload() {
             document.getElementById('tutorialModal').style.display = 'none'; 
             
@@ -1349,7 +1439,6 @@
                     link.click(); 
                     document.body.removeChild(link);
                     
-                    // EFEK SUKSES (DOPAMIN)
                     mainBtn.innerText = "✔️ Berhasil Diunduh!";
                     mainBtn.style.background = "linear-gradient(135deg, #059669, #047857)";
                     mainBtn.style.transform = "scale(1.05)";
@@ -1370,3 +1459,4 @@
     </script>
 </body>
 </html>
+
