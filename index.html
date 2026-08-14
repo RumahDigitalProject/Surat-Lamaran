@@ -151,13 +151,13 @@
         #appUtama { display: none; flex-direction: column; height: 100vh; width: 100vw; overflow-x: hidden; }
 
         /* ======================================================= */
-        /* --- SEMUA POPUP / MODAL UMUM --- */
+        /* --- SEMUA POPUP / MODAL UMUM & DASHBOARD FULL --- */
         /* ======================================================= */
         .admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 100000; justify-content: center; align-items: center; padding: 15px; overflow-y: auto; overflow-x: hidden; }
         
         .admin-box { 
             background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 25px 20px; border-radius: 16px; max-width: 420px; width: 100%; 
+            padding: 25px 20px; border-radius: 16px; max-width: 450px; width: 100%; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; margin: auto; border: 1px solid rgba(255, 255, 255, 0.6); color: #0f172a;
         }
         .admin-box h3 { color: var(--primary); margin-top: 0; font-size: 1.3rem; font-weight: 800;}
@@ -169,9 +169,72 @@
         .btn-toggle-on { background-color: var(--secondary); color: white; }
         .btn-toggle-off { background-color: #64748b; color: white; }
         
-        .admin-section { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.8); margin-bottom: 15px; text-align: left;}
-        .admin-form-scroll { max-height: 50vh; overflow-y: auto; overflow-x: hidden; padding-right: 5px; margin-bottom: 10px; width: 100%;}
-        .admin-form-scroll input[type="text"], .admin-form-scroll input[type="email"], .admin-form-scroll textarea { margin-bottom: 12px; font-size:0.9rem;}
+        /* FULL DASHBOARD ADMIN CSS */
+        #adminDashboardFull {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #f8fafc; z-index: 100000; overflow-y: auto; overflow-x: hidden; flex-direction: column;
+        }
+        .admin-header-full {
+            background: #ffffff; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 10; border-bottom: 3px solid var(--secondary);
+            flex-wrap: wrap; gap: 15px;
+        }
+        .admin-header-full h2 { margin: 0; color: var(--primary); font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 8px;}
+        
+        /* TOMBOL HEADER RAPI SEJAJAR */
+        .admin-header-actions { 
+            display: flex; gap: 10px; flex-wrap: nowrap; justify-content: flex-end; align-items: center;
+        }
+        .admin-header-actions .btn-header-action {
+            background-color: var(--secondary) !important; /* Warna semua tombol hijau sejajar */
+            color: white; border: none; padding: 10px 15px; border-radius: 8px; 
+            font-weight: bold; font-size: 0.85rem; cursor: pointer; white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(16,185,129,0.2); transition: 0.2s;
+        }
+        .admin-header-actions .btn-header-action:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16,185,129,0.3);
+        }
+
+        .admin-container-full { padding: 25px; max-width: 1400px; margin: 0 auto; width: 100%; flex: 1; }
+        
+        .table-responsive { width: 100%; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+        .client-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .client-table th { background: var(--primary); color: white; padding: 15px 20px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;}
+        .client-table td { padding: 15px 20px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; color: #334155; font-size: 0.95rem;}
+        .client-table tr:hover { background: #f1f5f9; }
+        .client-table tr:last-child td { border-bottom: none; }
+        
+        .btn-salin-key-table { 
+            background: #e2e8f0; color: #0f172a; border: 1px solid #cbd5e1; padding: 4px 10px; 
+            border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: 700; margin-left: 10px; transition: 0.2s;
+        }
+        .btn-salin-key-table:hover { background: var(--secondary); color: white; border-color: var(--secondary); }
+        
+        .action-btns-table { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .action-btns-table button { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s;}
+        .action-btns-table button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .btn-status-active { background: #d1fae5; color: #065f46; border: 1px solid #34d399 !important; }
+        .btn-status-inactive { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1 !important; }
+
+        /* RESPONSIVE TABLE (CARD VIEW) TANPA GESER KANAN KIRI DI HP */
+        @media (max-width: 768px) {
+            .admin-container-full { padding: 15px; }
+            .admin-header-full { flex-direction: column; align-items: flex-start; gap: 12px; padding: 15px; }
+            .admin-header-actions { width: 100%; overflow-x: auto; padding-bottom: 5px; }
+            
+            .client-table thead { display: none; }
+            .client-table, .client-table tbody, .client-table tr, .client-table td { display: block; width: 100%; }
+            .client-table tr { margin-bottom: 15px; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+            .client-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #f1f5f9; position: relative; }
+            .client-table td:last-child { border-bottom: none; }
+            .client-table td::before { 
+                content: attr(data-label); font-weight: 800; display: block; margin-bottom: 8px; 
+                color: var(--primary); font-size: 0.75rem; text-transform: uppercase; 
+            }
+        }
+
+        .admin-form-scroll { max-height: 55vh; overflow-y: auto; overflow-x: hidden; padding-right: 5px; margin-bottom: 15px; width: 100%; text-align: left;}
+        .admin-form-scroll input[type="text"], .admin-form-scroll input[type="email"], .admin-form-scroll textarea { margin-bottom: 12px; font-size:0.95rem; text-align: left;}
         
         .lampiran-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
         .checkbox-item { 
@@ -182,20 +245,16 @@
         .checkbox-item:hover { background: #fff; border-color: var(--secondary); }
         .checkbox-item input { margin: 0 !important; width: 16px; height: 16px; cursor: pointer; accent-color: var(--secondary); flex-shrink:0;}
         .checkbox-item span { font-size: 0.75rem; color: #1e293b; font-weight: 600; line-height: 1.2; text-align: left; }
+        
         .custom-list { list-style: none; padding: 0; margin: 0 0 10px 0; text-align: left; font-size: 0.8rem; }
         .custom-list li { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.08); padding: 6px 10px; margin-bottom: 5px; border-radius: 6px; font-weight: bold;}
         .custom-list li button { background: var(--danger); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.7rem; padding: 3px 8px; font-weight:bold;}
 
-        .hasil-key { background: #d1fae5; color: #065f46; padding: 12px; border-radius: 8px; margin-top: 10px; display: none; border: 1px solid #34d399; position: relative; text-align: center;}
-        .hasil-key span { display: block; font-size: 1.4rem; font-weight: bold; color: var(--danger); margin: 6px 0; letter-spacing: 1px;}
-        .btn-copy { background: var(--secondary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; position: absolute; right: 10px; top: 10px; font-weight: bold;}
+        .hasil-key { background: #d1fae5; color: #065f46; padding: 15px; border-radius: 8px; margin-top: 10px; display: none; border: 1px solid #34d399; position: relative; text-align: center;}
+        .hasil-key span { display: block; font-size: 1.6rem; font-weight: 900; color: var(--danger); margin: 8px 0; letter-spacing: 2px;}
+        .btn-copy { background: var(--secondary); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; margin-top: 5px; box-shadow: 0 4px 10px rgba(16,185,129,0.3);}
         
-        .client-list { max-height: 220px; overflow-y: auto; overflow-x: hidden; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; margin-top: 10px; background: rgba(255,255,255,0.7); width: 100%;}
-        .client-item { padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;}
-        .action-btns { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end;}
-        .action-btns button { padding: 5px 8px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem;}
-        
-        #loadingBar { display: none; color: #1e3a8a; background: #dbeafe; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; font-size: 0.85rem; text-align: center; border: 1px solid #bfdbfe;}
+        #loadingBar { display: none; color: #1e3a8a; background: #dbeafe; padding: 12px; border-radius: 8px; margin-top: 10px; font-weight: bold; font-size: 0.95rem; text-align: center; border: 1px solid #bfdbfe;}
         .cv-link-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%;}
 
         /* ======================================================= */
@@ -317,95 +376,131 @@
         </div>
     </div>
 
-    <!-- 2. DASHBOARD ADMIN UTAMA -->
-    <div class="admin-overlay" id="overlayDashboardAdmin">
-        <div class="admin-box" style="max-width: 480px;">
-            <h3 style="border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom:10px;">⚙️ Admin Dashboard</h3>
-            
-            <div class="admin-section">
-                <b style="color: var(--primary);">➕ Tambah Klien & Setup Surat</b><br><br>
-                
-                <div class="admin-form-scroll">
-                    <label>Nama Lengkap (Wajib):</label>
-                    <input type="text" id="adminNamaKlien" placeholder="Contoh: Budi Santoso">
-                    
-                    <label>Pendidikan Terakhir:</label>
-                    <input type="text" id="adminPendidikan" placeholder="Contoh: SMK Negeri 1 Grati - Teknik...">
-                    <label>Status Nikah:</label>
-                    <input type="text" id="adminStatus" placeholder="Contoh: Belum Menikah">
-                    <label>Alamat Lengkap:</label>
-                    <textarea id="adminAlamat" placeholder="Contoh: Dsn. Krajan RT 01/RW 08, Sidoarjo..."></textarea>
-                    <label>Alamat Email:</label>
-                    <input type="email" id="adminEmail" placeholder="Contoh: budi.santoso@gmail.com">
-                    <label>No. Telp / WA:</label>
-                    <input type="text" id="adminTelp" placeholder="Contoh: 081234567890">
-                    <label>Paragraf 1 (Profil / Karakter):</label>
-                    <textarea id="adminProfil" placeholder="Contoh: Saya adalah individu yang disiplin..."></textarea>
-                    <label>Paragraf 2 (Pengalaman Kerja):</label>
-                    <textarea id="adminPengalaman" placeholder="Contoh: Sebagai informasi, saya memiliki pengalaman..."></textarea>
-                    
-                    <label>Daftar Lampiran (Otomatis Diurutkan):</label>
-                    <div class="lampiran-grid" id="gridLampiranAdmin"></div>
-                    
-                    <label>Tambah Lampiran Kustom (Opsional):</label>
-                    <div style="display: flex; gap: 8px; margin-bottom: 5px;">
-                        <input type="text" id="inputCustomLampiranAdmin" placeholder="Ketik lampiran lain..." style="margin: 0; text-align: left; font-size: 0.85rem;">
-                        <button type="button" onclick="addCustomLampiran('admin')" style="background: var(--secondary); color: white; border: none; padding: 0 15px; border-radius: 8px; font-weight: bold; cursor: pointer;">➕</button>
-                    </div>
-                    <ul class="custom-list" id="listCustomLampiranAdmin"></ul>
-                    
-                    <label style="margin-top:10px;">Paragraf Penutup:</label>
-                    <textarea id="adminPenutup" placeholder="Contoh: Besar harapan saya untuk dapat..."></textarea>
-                    
-                    <label style="margin-top:10px;">Upload Foto CV (Bisa Lebih Dari 1):</label>
-                    <input type="file" id="adminFileCv" accept="image/*" multiple style="background: white;">
-                </div>
-                
-                <button class="btn-admin" style="background-color: var(--secondary); width:100%; margin-top:8px;" onclick="prosesBuatKunciClient()" id="btnBuatKunci">
-                    🚀 Upload Data & Buat Kunci
-                </button>
-                
-                <div id="loadingBar">⏳ Menyimpan ke Database Server...</div>
-
-                <div class="hasil-key" id="boxHasilKey">
-                    Sukses! Aktivasi Key Klien:
-                    <button class="btn-copy" onclick="salinKey()">Salin</button>
-                    <span id="teksKunciBaru">JEF-XXXX</span>
-                </div>
+    <!-- 2. DASHBOARD ADMIN UTAMA (FULL SCREEN, NO SCROLL SAMPING DI HP) -->
+    <div id="adminDashboardFull">
+        <div class="admin-header-full">
+            <h2>⚙️ Data Klien - Portal Pro</h2>
+            <!-- TOMBOL RAPI, SEJAJAR DI KANAN, & WARNA SAMA -->
+            <div class="admin-header-actions">
+                <button class="btn-header-action" onclick="bukaTambahKlien()">➕ Tambah Klien</button>
+                <button class="btn-header-action" onclick="loadDataKlien()">🔄 Refresh</button>
+                <button class="btn-header-action" onclick="tutupAdminFull()">✖️ Tutup</button>
             </div>
-
-            <div class="admin-section">
-                <b style="color: var(--primary);">📋 Kelola Status Klien</b>
-                <button onclick="loadDataKlien()" style="float:right; cursor:pointer; padding:3px 8px; font-size:0.75rem; border-radius:5px; border:1px solid #ccc;">🔄 Refresh</button>
-                <div class="client-list" id="daftarKlienHtml">
-                    <div style="padding:15px; text-align:center; color:#64748b;">Memuat database server...</div>
-                </div>
+        </div>
+        
+        <div class="admin-container-full">
+            <div class="table-responsive">
+                <table class="client-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 35%;">Info Klien & Key</th>
+                            <th style="width: 20%;">Status Akses</th>
+                            <th style="width: 45%;">Tindakan & Kelola</th>
+                        </tr>
+                    </thead>
+                    <tbody id="daftarKlienHtml">
+                        <tr><td colspan="3" style="text-align:center; padding: 20px;">Memuat database server...</td></tr>
+                    </tbody>
+                </table>
             </div>
-
-            <button class="btn-admin btn-danger" style="width:100%;" onclick="tutupSemuaAdmin()">Tutup Admin Panel</button>
         </div>
     </div>
 
-    <!-- 3. MODAL EDIT KLIEN -->
-    <div class="admin-overlay" id="overlayEditKlien">
-        <div class="admin-box" style="max-width:400px;">
-            <h3 style="text-align: center;">✏️ Edit Data Klien</h3>
+    <!-- 3. MODAL TAMBAH KLIEN BARU -->
+    <div class="admin-overlay" id="overlayTambahKlien">
+        <div class="admin-box" style="max-width: 480px;">
+            <h3 style="border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom:10px; text-align: left;">➕ Tambah Klien Baru</h3>
             
-            <div class="admin-form-scroll" style="text-align: left;">
+            <div class="admin-form-scroll">
+                <label>Nama Lengkap (Wajib):</label>
+                <input type="text" id="adminNamaKlien" placeholder="Contoh: Budi Santoso">
+                
+                <label>Kota (Untuk Tgl Surat):</label>
+                <input type="text" id="adminKotaSurat" placeholder="Contoh: Pasuruan">
+
+                <label>Pendidikan Terakhir:</label>
+                <input type="text" id="adminPendidikan" placeholder="Contoh: SMK Negeri 1 Grati - Teknik...">
+                
+                <label style="margin-top:5px;">Status Nikah:</label>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <label class="checkbox-item" style="border:none; padding:0; background:transparent;"><input type="radio" name="adminStatusNikah" value="Belum Menikah" checked> <span>Belum Menikah</span></label>
+                    <label class="checkbox-item" style="border:none; padding:0; background:transparent;"><input type="radio" name="adminStatusNikah" value="Sudah Menikah"> <span>Sudah Menikah</span></label>
+                </div>
+
+                <label>Alamat Lengkap:</label>
+                <textarea id="adminAlamat" placeholder="Contoh: Dsn. Krajan RT 01/RW 08, Sidoarjo..."></textarea>
+                
+                <label>Alamat Email:</label>
+                <input type="email" id="adminEmail" placeholder="Contoh: budi.santoso@gmail.com">
+                <label>No. Telp / WA:</label>
+                <input type="text" id="adminTelp" placeholder="Contoh: 081234567890">
+                <label>Paragraf 1 (Profil / Karakter):</label>
+                <textarea id="adminProfil" placeholder="Contoh: Saya adalah individu yang disiplin..."></textarea>
+                <label>Paragraf 2 (Pengalaman Kerja):</label>
+                <textarea id="adminPengalaman" placeholder="Contoh: Sebagai informasi, saya memiliki pengalaman..."></textarea>
+                
+                <label>Daftar Lampiran (Otomatis Diurutkan):</label>
+                <div class="lampiran-grid" id="gridLampiranAdmin"></div>
+                
+                <label>Tambah Lampiran Kustom (Opsional):</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 5px;">
+                    <input type="text" id="inputCustomLampiranAdmin" placeholder="Ketik lampiran lain..." style="margin: 0; text-align: left; font-size: 0.85rem;">
+                    <button type="button" onclick="addCustomLampiran('admin')" style="background: var(--secondary); color: white; border: none; padding: 0 15px; border-radius: 8px; font-weight: bold; cursor: pointer;">➕</button>
+                </div>
+                <ul class="custom-list" id="listCustomLampiranAdmin"></ul>
+                
+                <label style="margin-top:10px;">Paragraf Penutup:</label>
+                <textarea id="adminPenutup" placeholder="Contoh: Besar harapan saya untuk dapat..."></textarea>
+                
+                <label style="margin-top:10px;">Upload Foto CV (Bisa Lebih Dari 1):</label>
+                <input type="file" id="adminFileCv" accept="image/*" multiple style="background: white;">
+            </div>
+            
+            <button class="btn-admin" style="background-color: var(--secondary); width:100%; margin-top:8px;" onclick="prosesBuatKunciClient()" id="btnBuatKunci">
+                🚀 Upload Data & Buat Kunci
+            </button>
+            
+            <div id="loadingBar">⏳ Menyimpan ke Database Server...</div>
+
+            <div class="hasil-key" id="boxHasilKey">
+                Sukses! Aktivasi Key Klien:
+                <span id="teksKunciBaru">JEF-XXXX</span>
+                <button class="btn-copy" onclick="salinKeyHasil()">Salin Key Sekarang</button>
+            </div>
+
+            <button class="btn-admin btn-danger" style="width:100%; margin-top: 15px;" onclick="tutupTambahKlien()">Batal / Tutup</button>
+        </div>
+    </div>
+
+    <!-- 4. MODAL EDIT KLIEN -->
+    <div class="admin-overlay" id="overlayEditKlien">
+        <div class="admin-box" style="max-width:480px;">
+            <h3 style="text-align: left; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom:10px;">✏️ Edit Data Klien</h3>
+            
+            <div class="admin-form-scroll">
                 <input type="hidden" id="editKeyVal">
                 
                 <label>Nama Lengkap:</label>
-                <input type="text" id="editNamaVal" style="text-align: left;">
+                <input type="text" id="editNamaVal">
+                
+                <label>Kota (Untuk Tgl Surat):</label>
+                <input type="text" id="editKotaSuratVal">
+
                 <label>Pendidikan:</label>
-                <input type="text" id="editPendidikanVal" style="text-align: left;">
-                <label>Status Nikah:</label>
-                <input type="text" id="editStatusVal" style="text-align: left;">
+                <input type="text" id="editPendidikanVal">
+                
+                <label style="margin-top:5px;">Status Nikah:</label>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <label class="checkbox-item" style="border:none; padding:0; background:transparent;"><input type="radio" name="editStatusNikah" value="Belum Menikah"> <span>Belum Menikah</span></label>
+                    <label class="checkbox-item" style="border:none; padding:0; background:transparent;"><input type="radio" name="editStatusNikah" value="Sudah Menikah"> <span>Sudah Menikah</span></label>
+                </div>
+
                 <label>Alamat Lengkap:</label>
                 <textarea id="editAlamatVal"></textarea>
                 <label>Alamat Email:</label>
-                <input type="email" id="editEmailVal" style="text-align: left;">
+                <input type="email" id="editEmailVal">
                 <label>No Telp:</label>
-                <input type="text" id="editTelpVal" style="text-align: left;">
+                <input type="text" id="editTelpVal">
                 <label>Paragraf 1 (Profil):</label>
                 <textarea id="editProfilVal"></textarea>
                 <label>Paragraf 2 (Pengalaman):</label>
@@ -424,17 +519,17 @@
                 <label style="margin-top:10px;">Paragraf Penutup:</label>
                 <textarea id="editPenutupVal"></textarea>
 
-                <label>Foto CV Lama (Hapus centang):</label>
-                <div id="editCvList" style="background:rgba(255,255,255,0.7); padding:10px; border:1px solid #ccc; max-height:100px; overflow-y:auto; margin-bottom:10px; border-radius:8px;"></div>
+                <label>Foto CV Lama (Hapus centang untuk hapus foto):</label>
+                <div id="editCvList" style="background:rgba(255,255,255,0.7); padding:10px; border:1px solid #ccc; max-height:120px; overflow-y:auto; margin-bottom:15px; border-radius:8px; text-align: left;"></div>
 
                 <label>➕ Tambah Foto CV Baru:</label>
                 <input type="file" id="editFileBaru" accept="image/*" multiple style="background: white;">
             </div>
 
-            <div id="loadingEdit" style="display:none; color: #1e3a8a; background: #dbeafe; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; font-size: 0.9rem; text-align:center;">⏳ Menyimpan data...</div>
+            <div id="loadingEdit" style="display:none; color: #1e3a8a; background: #dbeafe; padding: 12px; border-radius: 8px; margin-top: 10px; font-weight: bold; font-size: 0.95rem; text-align:center;">⏳ Menyimpan perubahan data...</div>
 
             <button class="btn-admin" style="background-color: var(--secondary); width:100%; margin-top:10px;" onclick="simpanEditKlien()" id="btnSimpanEdit">💾 Simpan Perubahan</button>
-            <button class="btn-admin btn-danger" style="width:100%; margin-top:8px;" onclick="document.getElementById('overlayEditKlien').style.display='none'">Batal</button>
+            <button class="btn-admin btn-danger" style="width:100%; margin-top:8px;" onclick="document.getElementById('overlayEditKlien').style.display='none'">Batal / Tutup</button>
         </div>
     </div>
 
@@ -475,7 +570,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Posisi yang Dilamar</label>
+                    <label>Posisi yang Dilamar (Opsional)</label>
                     <input type="text" id="inputPosisi" placeholder="Contoh: Operator Produksi" onkeyup="updatePreview()">
                 </div>
                 
@@ -537,7 +632,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- 4. MODAL KOREKSI SURAT (SMART FOCUS & LIVE RENDER) -->
+    <!-- MODAL KOREKSI SURAT (SMART FOCUS & LIVE RENDER) -->
     <!-- ============================================== -->
     <div class="admin-overlay" id="popupKoreksi" style="z-index: 99999;">
         <div class="admin-box" style="padding: 15px;">
@@ -549,7 +644,7 @@
                 <div class="a4-paper" id="hal-surat" onclick="toggleZoomKertas()">
                     <div class="right-align highlight" id="preview-kota">Pasuruan, ............................</div>
                     <div class="mb-3">
-                        <p style="margin:0;">Hal: Lamaran Pekerjaan – <span id="preview-posisi1" class="highlight">[Posisi yang Dilamar]</span></p>
+                        <p style="margin:0;">Hal: Lamaran Pekerjaan<span id="wrapper-posisi1"> – <span id="preview-posisi1" class="highlight"></span></span></p>
                         <p style="margin:0;">Lampiran: <span id="preview-lampiran" class="highlight">- Berkas</span></p>
                     </div>
                     
@@ -559,7 +654,7 @@
                     </div>
 
                     <p><b>Dengan hormat,</b></p>
-                    <p>Berdasarkan informasi lowongan pekerjaan yang saya terima, melalui surat ini saya bermaksud melamar posisi <b><span id="preview-posisi2" class="highlight">[Posisi yang Dilamar]</span> di <span id="preview-pt2" class="highlight">[Nama Perusahaan]</span></b>. Berikut adalah data diri singkat saya:</p>
+                    <p>Berdasarkan informasi lowongan pekerjaan yang saya terima, melalui surat ini saya bermaksud melamar <span id="dynamic-posisi-text">pekerjaan di</span> <b><span id="preview-pt2" class="highlight">[Nama Perusahaan]</span></b>. Berikut adalah data diri singkat saya:</p>
                     
                     <table>
                         <tr><td class="col-1">Nama</td><td class="col-2">:</td><td id="val-nama">-</td></tr>
@@ -606,7 +701,7 @@
         </div>
     </div>
 
-    <!-- 5. POPUP EDUKASI PENGUNDUHAN -->
+    <!-- POPUP EDUKASI PENGUNDUHAN -->
     <div id="tutorialModal" class="admin-overlay" style="z-index: 100000;">
         <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 30px 20px; border-radius: 16px; max-width: 450px; text-align: center; color: #0f172a;">
             <h3 style="color: var(--primary); margin-top: 0; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; font-weight: 800;">Panduan Penggabungan PDF</h3>
@@ -638,7 +733,7 @@
         </div>
     </div>
 
-    <!-- 6. POPUP INFORMASI WEBSITE (BARU) -->
+    <!-- POPUP INFORMASI WEBSITE -->
     <div id="infoModal" class="admin-overlay" style="z-index: 100000;">
         <div class="info-content">
             <h3>Portal Pro</h3>
@@ -668,7 +763,6 @@
             document.getElementById('toastTextMain').innerText = "Selamat datang, " + namaClient;
             toast.classList.add('show');
             
-            // Efek Suara Harmoni Sci-Fi (6 Detik Decay Mulus)
             try {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 const ctx = new AudioContext();
@@ -691,23 +785,19 @@
                     osc.stop(ctx.currentTime + startTime + duration);
                 }
 
-                // Pola 5 Nada Futuristik & Mewah (Durasi Gema 6 Detik di akhir)
-                playNote(523.25, 0, 1.0, 'sine');    // Nada C5
-                playNote(659.25, 0.15, 1.0, 'sine'); // Nada E5
-                playNote(783.99, 0.3, 1.0, 'sine');  // Nada G5
-                playNote(1046.50, 0.45, 6.0, 'triangle'); // Nada C6 (Kristal panjang 6 detik)
-                playNote(1318.51, 0.45, 6.0, 'sine');     // Nada E6 (Harmoni panjang 6 detik)
+                playNote(523.25, 0, 1.0, 'sine');    // C5
+                playNote(659.25, 0.15, 1.0, 'sine'); // E5
+                playNote(783.99, 0.3, 1.0, 'sine');  // G5
+                playNote(1046.50, 0.45, 6.0, 'triangle'); // C6
+                playNote(1318.51, 0.45, 6.0, 'sine');     // E6
                 
             } catch(e) { console.log("Perangkat tidak mendukung suara Web Audio API"); }
 
-            // Menghilang setelah 7 detik
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 7000);
+            setTimeout(() => { toast.classList.remove('show'); }, 7000);
         }
 
         // ==========================================
-        // FITUR INFO WEB (VERSIONING OTOMATIS BERDASAR TGL 1 TIAP BULAN)
+        // FITUR INFO WEB (VERSIONING OTOMATIS)
         // ==========================================
         function setAppVersion() {
             const d = new Date();
@@ -719,12 +809,8 @@
             document.getElementById('yearCopy').innerText = d.getFullYear();
         }
 
-        function bukaInfoWeb() {
-            document.getElementById('infoModal').style.display = 'flex';
-        }
-        function tutupInfoWeb() {
-            document.getElementById('infoModal').style.display = 'none';
-        }
+        function bukaInfoWeb() { document.getElementById('infoModal').style.display = 'flex'; }
+        function tutupInfoWeb() { document.getElementById('infoModal').style.display = 'none'; }
 
         window.addEventListener('DOMContentLoaded', () => {
             setAppVersion();
@@ -821,7 +907,7 @@
         const URL_API = "https://script.google.com/macros/s/AKfycbyCJe0pH6-rWG6gzX33kIfpe4T6F1pGZs4obd-rcIi_OLic60PPpyJLXmWgc3w2E3jr/exec"; 
         const PASSWORD_MASTER = "2Udr7j$*1"; 
         let globalDatabaseClients = []; 
-        window.clientAlamatStr = ""; 
+        window.clientKotaSurat = ""; 
         window.clientLampiranCount = 0; 
 
         // ==========================================
@@ -1000,19 +1086,34 @@
         }
 
         // ==========================================
-        // 1. SISTEM ADMIN PANEL
+        // 1. SISTEM ADMIN PANEL (FULL PAGE)
         // ==========================================
         function bukaPopupLoginAdmin() { document.getElementById('overlayLoginAdmin').style.display = 'flex'; }
+        
         function tutupSemuaAdmin() {
-            document.querySelectorAll('.admin-overlay').forEach(el => {
-                if (el.id !== 'popupKoreksi' && el.id !== 'tutorialModal' && el.id !== 'infoModal') el.style.display = 'none';
-            });
+            document.getElementById('overlayLoginAdmin').style.display = 'none';
+            document.getElementById('overlayEditKlien').style.display = 'none';
+            document.getElementById('overlayTambahKlien').style.display = 'none';
             document.getElementById('inputPassAdmin').value = '';
         }
+
+        function tutupAdminFull() {
+            document.getElementById('adminDashboardFull').style.display = 'none';
+            tutupSemuaAdmin();
+        }
+
+        function bukaTambahKlien() {
+            document.getElementById('overlayTambahKlien').style.display = 'flex';
+        }
+
+        function tutupTambahKlien() {
+            document.getElementById('overlayTambahKlien').style.display = 'none';
+        }
+
         function cekPasswordAdmin() {
             if (document.getElementById('inputPassAdmin').value === PASSWORD_MASTER) {
                 document.getElementById('overlayLoginAdmin').style.display = 'none';
-                document.getElementById('overlayDashboardAdmin').style.display = 'flex';
+                document.getElementById('adminDashboardFull').style.display = 'flex';
                 loadDataKlien();
             } else { alert("Sandi Admin Salah!"); }
         }
@@ -1048,8 +1149,9 @@
                 let payload = { 
                     action: "create", 
                     namaKlien: nama, 
+                    kotaSurat: document.getElementById('adminKotaSurat').value,
                     pendidikan: document.getElementById('adminPendidikan').value,
-                    statusNikah: document.getElementById('adminStatus').value,
+                    statusNikah: document.querySelector('input[name="adminStatusNikah"]:checked').value,
                     alamat: document.getElementById('adminAlamat').value,
                     email: document.getElementById('adminEmail').value,
                     noTelp: document.getElementById('adminTelp').value,
@@ -1067,7 +1169,8 @@
                     document.getElementById('teksKunciBaru').innerText = data.key;
                     document.getElementById('boxHasilKey').style.display = 'block';
                     
-                    ['adminNamaKlien','adminPendidikan','adminStatus','adminAlamat','adminEmail','adminTelp','adminProfil','adminPengalaman','adminPenutup'].forEach(id => document.getElementById(id).value = '');
+                    ['adminNamaKlien','adminKotaSurat','adminPendidikan','adminAlamat','adminEmail','adminTelp','adminProfil','adminPengalaman','adminPenutup'].forEach(id => document.getElementById(id).value = '');
+                    document.querySelector('input[name="adminStatusNikah"][value="Belum Menikah"]').checked = true;
                     fileInput.value = '';
                     
                     LAMPIRAN_OPTIONS.forEach((_, i) => {
@@ -1077,49 +1180,67 @@
                     customLampiranAdmin = [];
                     renderCustomLampiran('admin');
 
-                    loadDataKlien();
+                    loadDataKlien(); 
                 } else { alert("Gagal: " + data.message); }
             } catch (err) { alert("Terjadi kesalahan jaringan."); }
             btn.disabled = false; loading.style.display = 'none';
         }
 
-        function salinKey() {
+        function salinKeyHasil() {
             let key = document.getElementById('teksKunciBaru').innerText;
             navigator.clipboard.writeText(key);
             alert("Kunci berhasil disalin!");
         }
 
+        function salinKeyKlienTable(key) {
+            navigator.clipboard.writeText(key);
+            alert("Key " + key + " disalin!");
+        }
+
         function loadDataKlien() {
             let container = document.getElementById('daftarKlienHtml');
-            container.innerHTML = "<div style='padding:10px; text-align:center;'>Memuat database server...</div>";
+            container.innerHTML = "<tr><td colspan='3' style='text-align:center; padding: 20px;'>Memuat database server...</td></tr>";
             fetch(URL_API + "?action=get_all").then(res => res.json()).then(data => {
                 if (data.data.length === 0) {
-                    container.innerHTML = "<div style='padding:10px; font-size:0.85rem; color:red; text-align:center;'>Belum ada klien tersimpan.</div>";
+                    container.innerHTML = "<tr><td colspan='3' style='text-align:center; padding: 20px; color: red;'>Belum ada klien tersimpan.</td></tr>";
                     return;
                 }
-                globalDatabaseClients = data.data; 
+                
+                globalDatabaseClients = data.data.reverse(); 
+                
                 let html = "";
-                data.data.forEach(item => {
-                    let statusBtnClass = item.status === "ACTIVE" ? "btn-toggle-on" : "btn-toggle-off";
+                globalDatabaseClients.forEach(item => {
+                    let statusBtnClass = item.status === "ACTIVE" ? "btn-status-active" : "btn-status-inactive";
                     let statusText = item.status === "ACTIVE" ? "Aktif" : "Nonaktif";
+                    
                     html += `
-                    <div class="client-item">
-                        <div><b style="font-size:0.95rem;">${item.nama}</b><br><span style="color:#64748b;">Key: <b>${item.key}</b></span></div>
-                        <div class="action-btns">
-                            <button class="${statusBtnClass}" onclick="toggleStatus('${item.key}')">${statusText}</button>
-                            <button style="background:#0284c7; color:white;" onclick="renewKlien('${item.key}')">+7 Hari</button>
-                            <button class="btn-edit" onclick="bukaEditKlien('${item.key}')">Edit</button>
-                            <button class="btn-danger" onclick="hapusKlien('${item.key}')">Hapus</button>
-                        </div>
-                    </div>`;
+                    <tr>
+                        <td data-label="Info Klien & Key">
+                            <b style="font-size:1.05rem; color: var(--primary); display:block; margin-bottom: 5px;">${item.nama}</b>
+                            <span style="color:#64748b; font-size: 0.85rem; display: flex; align-items: center;">
+                                Key: <b style="margin-left: 5px; color: #1e293b;">${item.key}</b>
+                                <button class="btn-salin-key-table" onclick="salinKeyKlienTable('${item.key}')">Salin</button>
+                            </span>
+                        </td>
+                        <td data-label="Status Akses">
+                            <button class="${statusBtnClass}" style="padding: 6px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.8rem;" onclick="toggleStatus('${item.key}')">${statusText}</button>
+                        </td>
+                        <td data-label="Tindakan & Kelola">
+                            <div class="action-btns-table">
+                                <button style="background:#0284c7; color:white;" onclick="renewKlien('${item.key}')">⏳ +7 Hari</button>
+                                <button style="background:#f59e0b; color:white;" onclick="bukaEditKlien('${item.key}')">✏️ Edit</button>
+                                <button style="background:#ef4444; color:white;" onclick="hapusKlien('${item.key}')">🗑️ Hapus</button>
+                            </div>
+                        </td>
+                    </tr>`;
                 });
                 container.innerHTML = html;
             });
         }
 
         function toggleStatus(key) { fetch(URL_API, { method: "POST", body: JSON.stringify({ action: "toggle_status", key: key }) }).then(res => res.json()).then(data => { if(data.status === "success") loadDataKlien(); }); }
-        function renewKlien(key) { if(!confirm("Perpanjang masa aktif klien ini 7 hari ke depan?")) return; fetch(URL_API, { method: "POST", body: JSON.stringify({ action: "renew", key: key }) }).then(res => res.json()).then(data => { if(data.status === "success") { alert("Diperpanjang!"); loadDataKlien(); } }); }
-        function hapusKlien(key) { if(!confirm("Yakin hapus klien " + key + "?")) return; fetch(URL_API, { method: "POST", body: JSON.stringify({ action: "delete", key: key }) }).then(res => res.json()).then(data => { if(data.status === "success") loadDataKlien(); }); }
+        function renewKlien(key) { if(!confirm("Perpanjang masa aktif klien ini 7 hari ke depan?")) return; fetch(URL_API, { method: "POST", body: JSON.stringify({ action: "renew", key: key }) }).then(res => res.json()).then(data => { if(data.status === "success") { alert("Masa Aktif Klien Diperpanjang!"); loadDataKlien(); } }); }
+        function hapusKlien(key) { if(!confirm("Yakin hapus klien " + key + "? Tindakan ini tidak dapat dibatalkan.")) return; fetch(URL_API, { method: "POST", body: JSON.stringify({ action: "delete", key: key }) }).then(res => res.json()).then(data => { if(data.status === "success") loadDataKlien(); }); }
 
         function bukaEditKlien(key) {
             let client = globalDatabaseClients.find(c => c.key === key);
@@ -1127,8 +1248,14 @@
             
             document.getElementById('editKeyVal').value = client.key; 
             document.getElementById('editNamaVal').value = client.nama; 
+            document.getElementById('editKotaSuratVal').value = client.biodata.kotaSurat || "";
             document.getElementById('editPendidikanVal').value = client.biodata.pendidikan || ""; 
-            document.getElementById('editStatusVal').value = client.biodata.statusNikah || ""; 
+            
+            let statusVal = client.biodata.statusNikah || "Belum Menikah";
+            let rbStatus = document.querySelector('input[name="editStatusNikah"][value="' + statusVal + '"]');
+            if(rbStatus) rbStatus.checked = true;
+            else document.querySelector('input[name="editStatusNikah"][value="Belum Menikah"]').checked = true;
+
             document.getElementById('editAlamatVal').value = client.biodata.alamat || ""; 
             document.getElementById('editEmailVal').value = client.biodata.email || ""; 
             document.getElementById('editTelpVal').value = client.biodata.noTelp || ""; 
@@ -1162,8 +1289,8 @@
             let cvListHTML = "";
             if (client.cvUrls) {
                 let urls = client.cvUrls.split(",");
-                urls.forEach((u, i) => { cvListHTML += `<div><label style="font-weight:normal; font-size:0.8rem; display:inline;"><input type="checkbox" class="cb-keep-url" value="${u}" checked> Foto CV ke-${i+1}</label></div>`; });
-            } else { cvListHTML = "<i style='font-size:0.8rem'>Tidak ada foto CV</i>"; }
+                urls.forEach((u, i) => { cvListHTML += `<div><label style="font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:8px;"><input type="checkbox" class="cb-keep-url" value="${u}" checked style="width:16px; height:16px;"> Pertahankan Foto CV ke-${i+1}</label></div>`; });
+            } else { cvListHTML = "<i style='font-size:0.85rem; color:#64748b;'>Tidak ada foto CV sebelumnya.</i>"; }
             document.getElementById('editCvList').innerHTML = cvListHTML;
         }
 
@@ -1183,8 +1310,9 @@
                     action: "edit", 
                     key: key, 
                     newName: document.getElementById('editNamaVal').value, 
+                    kotaSurat: document.getElementById('editKotaSuratVal').value,
                     pendidikan: document.getElementById('editPendidikanVal').value,
-                    statusNikah: document.getElementById('editStatusVal').value,
+                    statusNikah: document.querySelector('input[name="editStatusNikah"]:checked').value,
                     alamat: document.getElementById('editAlamatVal').value,
                     email: document.getElementById('editEmailVal').value,
                     noTelp: document.getElementById('editTelpVal').value,
@@ -1197,7 +1325,7 @@
                 };
                 let res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
                 let data = await res.json();
-                if (data.status === "success") { alert("Tersimpan!"); document.getElementById('overlayEditKlien').style.display = 'none'; loadDataKlien(); }
+                if (data.status === "success") { alert("Data Klien Berhasil Disimpan!"); document.getElementById('overlayEditKlien').style.display = 'none'; loadDataKlien(); }
             } catch(e) { alert("Terjadi kesalahan."); }
             btn.disabled = false; loading.style.display = 'none';
         }
@@ -1230,7 +1358,6 @@
                     clearInterval(matrixInterval);
                     document.getElementById('appUtama').style.display = 'flex';
                     
-                    // PANGGIL FITUR TOAST NOTIFICATION EKSKLUSIF
                     showToast(data.nama);
                     
                     initSignaturePad();
@@ -1252,7 +1379,7 @@
                     document.getElementById('val-email').innerText = data.biodata.email || "-";
                     document.getElementById('val-telp').innerText = data.biodata.noTelp || "-";
                     
-                    window.clientAlamatStr = data.biodata.alamat || ""; 
+                    window.clientKotaSurat = data.biodata.kotaSurat || ""; 
                     
                     if(data.biodata.profil && data.biodata.profil.trim() !== "") {
                         document.getElementById('val-profil').innerHTML = `<p>${data.biodata.profil.replace(/\n/g, '<br>')}</p>`;
@@ -1352,28 +1479,30 @@
 
         function updatePreview() {
             let k = document.getElementById('inputKota').value;
-            let p = document.getElementById('inputPosisi').value;
+            let p = document.getElementById('inputPosisi').value.trim();
             let pt = document.getElementById('inputPT').value;
             
-            let defaultCity = "Pasuruan";
-            if (window.clientAlamatStr) {
-                let parts = window.clientAlamatStr.split(',');
-                if (parts.length > 1) {
-                    let potentialCity = parts[parts.length - 2].trim();
-                    potentialCity = potentialCity.replace(/^(Kabupaten|Kab\.|Kota)\s+/i, '');
-                    defaultCity = potentialCity;
-                } else if (parts.length === 1 && parts[0].trim() !== "") {
-                    defaultCity = parts[0].trim();
-                }
-            }
+            let defaultCity = window.clientKotaSurat || "Pasuruan";
 
             const m = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
             const t = new Date();
             let defaultDate = defaultCity + ", " + t.getDate() + " " + m[t.getMonth()] + " " + t.getFullYear();
 
             document.getElementById('preview-kota').innerText = k || defaultDate;
-            document.getElementById('preview-posisi1').innerText = p || "[Posisi yang Dilamar]";
-            document.getElementById('preview-posisi2').innerText = p || "[Posisi yang Dilamar]";
+            
+            let wrapperPosisi1 = document.getElementById('wrapper-posisi1');
+            let previewPosisi1 = document.getElementById('preview-posisi1');
+            let dynamicPosisiText = document.getElementById('dynamic-posisi-text');
+
+            if (p !== "") {
+                wrapperPosisi1.style.display = "inline";
+                previewPosisi1.innerText = p;
+                previewPosisi1.style.backgroundColor = "transparent";
+                dynamicPosisiText.innerHTML = `posisi <b>${p}</b> di`;
+            } else {
+                wrapperPosisi1.style.display = "none";
+                dynamicPosisiText.innerHTML = `pekerjaan di`;
+            }
             
             let clientFormat = document.querySelector('input[name="clientFormatSurat"]:checked').value;
             let blokTujuan = document.getElementById('blok-tujuan-surat');
@@ -1434,7 +1563,7 @@
                     const canvas = await html2canvas(clone, { scale: 3, useCORS: true, backgroundColor: '#ffffff' });
                     const link = document.createElement('a');
                     link.href = canvas.toDataURL('image/png');
-                    link.download = 'Surat_Lamaran_' + (document.getElementById('inputPosisi').value || 'Posisi') + '.png';
+                    link.download = 'Surat_Lamaran_' + (document.getElementById('inputPosisi').value || 'Pekerjaan') + '.png';
                     document.body.appendChild(link); 
                     link.click(); 
                     document.body.removeChild(link);
